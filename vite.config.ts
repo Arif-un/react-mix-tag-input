@@ -1,26 +1,29 @@
+import typescript from '@rollup/plugin-typescript'
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
+  plugins: [tsconfigPaths()],
   build: {
     lib: {
-      // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'MyLib',
-      // the proper extensions will be added
-      fileName: 'my-lib',
+      name: 'MixTagInput',
+      fileName: 'MixTagInput',
+      formats: ['es', 'umd'],
     },
     rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
       external: ['react'],
       output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
         globals: {
-          React: 'React',
+          react: 'React',
         },
       },
+      plugins: [require('@rollup/plugin-typescript')({
+        tsconfig: './tsconfig.json',
+        lib: ['es5', 'es6', 'es2022', 'dom'],
+        target: 'es2022',
+      })],
     },
   },
 })
