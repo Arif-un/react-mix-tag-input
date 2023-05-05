@@ -23,11 +23,11 @@
     "build-storybook": "storybook build"
   },
   "keywords": [
-    "cursor",
-    "pointer",
-    "infinity",
-    "movement",
-    "continuity"
+    "mix-tag-input",
+    "react-input",
+    "react-component",
+    "html-input",
+    "mention"
   ],
   "author": "Arif Uddin",
   "license": "MIT",
@@ -94,7 +94,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Arif-un/react-mix-tag-input.git"
   },
   "publishConfig": {
     "access": "public"
