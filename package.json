@@ -27,7 +27,8 @@
     "react-input",
     "react-component",
     "html-input",
-    "mention"
+    "mention",
+    "suggestion"
   ],
   "author": "Arif Uddin",
   "license": "MIT",
