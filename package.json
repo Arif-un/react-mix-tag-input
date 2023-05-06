@@ -7,7 +7,7 @@
   "files": [
     "dist/**/*"
   ],
-  "types": "build/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "build:clean": "rimraf build",
@@ -102,5 +102,13 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
   }
 }
