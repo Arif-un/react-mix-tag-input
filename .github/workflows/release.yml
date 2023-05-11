@@ -20,7 +20,7 @@ jobs:
       - name: pkg install
         run: npm install
       - name: build
-        run: npm run vbuild
+        run: pnpm run vbuild
 
   publish:
     runs-on: ubuntu-latest
