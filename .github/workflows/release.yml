@@ -10,7 +10,6 @@ on:
 jobs:
   quality:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 18.16.0
