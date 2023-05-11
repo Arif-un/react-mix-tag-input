@@ -20,7 +20,7 @@ jobs:
       - name: pkg install
         run: npm install --legacy-peer-deps
       - name: build
-        run: pnpm run vbuild
+        run: npm run vbuild
 
   publish:
     runs-on: ubuntu-latest
