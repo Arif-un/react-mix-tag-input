@@ -11,9 +11,9 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js 18.16.0
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18.16.0
       - name: pkg install
@@ -26,9 +26,9 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' }}
     needs: [quality]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js 
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18.16.0
       - run: npx semantic-release
