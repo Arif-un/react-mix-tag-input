@@ -1,29 +1,17 @@
-import typescript from '@rollup/plugin-typescript'
-import { resolve } from 'path'
+/// <reference types="vitest" />
+/// <reference types="vite/client" />
+
+import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
-  plugins: [tsconfigPaths()],
-  build: {
-    lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      name: 'MixTagInput',
-      fileName: 'MixTagInput',
-      formats: ['es', 'umd'],
-    },
-    rollupOptions: {
-      external: ['react'],
-      output: {
-        globals: {
-          react: 'React',
-        },
-      },
-      plugins: [require('@rollup/plugin-typescript')({
-        tsconfig: './tsconfig.json',
-        lib: ['es5', 'es6', 'es2022', 'dom'],
-        target: 'es2022',
-      })],
-    },
+  plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
+    // you might want to disable it, if you don't have tests that rely on CSS
+    // since parsing CSS is slow
+    // css: true,
   },
 })
