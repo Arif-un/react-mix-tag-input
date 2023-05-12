@@ -1,4 +1,4 @@
-import { type MixTagValue } from './MixTagInput.d'
+import { type MixTagValue } from './MixInputType'
 
 export const DEFAULT_TAG_CLASS = 'mtag'
 
@@ -11,7 +11,12 @@ export function nodesToArray(nodes: NodeList | undefined): MixTagValue[] {
   for (let i = 0; i < nodeArr.length; i += 1) {
     const arrItem: Node | HTMLElement = nodeArr[i]
     const lastItem: MixTagValue | undefined = arr.at(-1)
-    if (arrItem instanceof Node && arrItem.nodeName === '#text' && arrItem.textContent !== '\n' && arrItem.textContent !== '') {
+    if (
+      arrItem instanceof Node &&
+      arrItem.nodeName === '#text' &&
+      arrItem.textContent !== '\n' &&
+      arrItem.textContent !== ''
+    ) {
       if (typeof lastItem === 'string') {
         arr[arr.length - 1] = lastItem + arrItem.textContent
       } else {
@@ -42,8 +47,9 @@ export function tagValueArrToString(valueArr: MixTagValue[] | undefined): string
     }
     if (typeof item === 'object') {
       const { label, classes } = item
-      return (acc += `<span class="${DEFAULT_TAG_CLASS} ${classes || ''
-        }" contenteditable="false">${label}</span>`)
+      return (acc += `<span class="${DEFAULT_TAG_CLASS} ${
+        classes || ''
+      }" contenteditable="false">${label}</span>`)
     }
     return ''
   }, '')
