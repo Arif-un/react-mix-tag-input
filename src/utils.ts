@@ -1,16 +1,16 @@
-import { type MixTagValue } from './MixInputType'
+import { type MixInputValue } from './MixInputType'
 
 export const DEFAULT_TAG_CLASS = 'mtag'
 
-export function nodesToArray(nodes: NodeList | undefined): MixTagValue[] {
+export function nodesToArray(nodes: NodeList | undefined): MixInputValue[] {
   if (!nodes) return []
 
   const nodeArr = Array.from(nodes)
-  const arr: MixTagValue[] = []
+  const arr: MixInputValue[] = []
 
   for (let i = 0; i < nodeArr.length; i += 1) {
     const arrItem: Node | HTMLElement = nodeArr[i]
-    const lastItem: MixTagValue | undefined = arr.at(-1)
+    const lastItem: MixInputValue | undefined = arr.at(-1)
     if (
       arrItem instanceof Node &&
       arrItem.nodeName === '#text' &&
@@ -36,20 +36,19 @@ export function nodesToArray(nodes: NodeList | undefined): MixTagValue[] {
   return arr
 }
 
-export function tagValueArrToString(valueArr: MixTagValue[] | undefined): string {
+export function tagValueArrToString(valueArr: MixInputValue[] | undefined): string {
   if (!Array.isArray(valueArr) || valueArr.length === 0) {
     return ''
   }
 
-  return valueArr.reduce((acc: string, item: MixTagValue) => {
+  return valueArr.reduce((acc: string, item: MixInputValue) => {
     if (typeof item === 'string') {
       return (acc += item)
     }
     if (typeof item === 'object') {
       const { label, classes } = item
-      return (acc += `<span class="${DEFAULT_TAG_CLASS} ${
-        classes || ''
-      }" contenteditable="false">${label}</span>`)
+      return (acc += `<span class="${DEFAULT_TAG_CLASS} ${classes || ''
+        }" contenteditable="false">${label}</span>`)
     }
     return ''
   }, '')
