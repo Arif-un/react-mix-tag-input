@@ -1,4 +1,4 @@
-import './MixTagInput.css'
+import './MixInput.css'
 
 import React, {
   type ForwardedRef,
@@ -9,10 +9,10 @@ import React, {
   useRef,
 } from 'react'
 
-import type { MixTagInputProps, MixTagInputRef, MixTagValue } from './MixTagInput.d'
+import type { MixInputProps, MixInputRef, MixInputValue } from './MixInputType'
 import { DEFAULT_TAG_CLASS, nodesToArray, tagValueArrToString } from './utils'
 
-const MixTagInput = forwardRef((props: MixTagInputProps, ref: ForwardedRef<MixTagInputRef>) => {
+const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
   const { onChange, value, multiline, ...restProps } = props
   const contentRef = useRef(tagValueArrToString(value))
   const editorRef = useRef<HTMLDivElement | null>(null)
@@ -22,7 +22,7 @@ const MixTagInput = forwardRef((props: MixTagInputProps, ref: ForwardedRef<MixTa
     editorRef.current.innerHTML = tagValueArrToString(value)
   }, [value])
 
-  const insertContent = (newContent: MixTagValue) => {
+  const insertContent = (newContent: MixInputValue) => {
     const selection = window.getSelection()
     if (!selection) {
       return
@@ -96,4 +96,5 @@ const MixTagInput = forwardRef((props: MixTagInputProps, ref: ForwardedRef<MixTa
     />
   )
 })
-export default MixTagInput
+
+export default MixInput

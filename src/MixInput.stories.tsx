@@ -3,29 +3,29 @@ import './stories.css'
 import type { Meta, StoryObj } from '@storybook/react'
 import React, { useRef, useState } from 'react'
 
-import MixTagInput from './MixTagInput'
-import type { MixTagInputRef, MixTagValue } from './MixTagInput.d'
+import MixInput from './MixInput'
+import type { MixInputRef, MixInputValue } from './MixInputType'
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
-const meta: Meta<typeof MixTagInput> = {
-  component: MixTagInput,
+const meta: Meta<typeof MixInput> = {
+  component: MixInput,
   tags: ['autodocs'],
 }
 
 export default meta
-type Story = StoryObj<typeof MixTagInput>
+type Story = StoryObj<typeof MixInput>
 
 // More on writing stories with args: https://storybook.js.org/docs/7.0/react/writing-stories/args
 export const Default: Story = {
   args: {
     value: ['asd'],
   },
-  render: () => <TestMixTagInput />,
+  render: () => <TestMixInput />,
 }
 
-function TestMixTagInput() {
-  const [val, setVal] = useState<MixTagValue[]>(['123', { type: 'tag', label: 'tag1' }, 'asdf'])
-  const r = useRef<MixTagInputRef>(null)
+function TestMixInput() {
+  const [val, setVal] = useState<MixInputValue[]>(['123', { type: 'tag', label: 'tag1' }, 'asdf'])
+  const r = useRef<MixInputRef>(null)
 
   const handleClick = () => {
     setVal((prev) => {
@@ -37,7 +37,7 @@ function TestMixTagInput() {
 
   return (
     <>
-      <MixTagInput
+      <MixInput
         ref={r}
         // multiline
         value={val}

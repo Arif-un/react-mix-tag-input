@@ -1,1 +1,2 @@
-export * from './MixTagInput'
+import MixInput from './MixInput'
+export default MixInput
