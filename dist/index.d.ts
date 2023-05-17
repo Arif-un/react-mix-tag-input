@@ -22,4 +22,4 @@ interface MixInputRef {
 
 declare const MixInput: React.ForwardRefExoticComponent<MixInputProps & React.RefAttributes<MixInputRef>>;
 
-export { MixInput as default };
+export { MixInputProps, MixInputRef, MixInputValue, MixInput as default };
