@@ -27,7 +27,13 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     if (!selection) {
       return
     }
+
     const range = selection.getRangeAt(0)
+
+    if (range.commonAncestorContainer !== editorRef.current && range.commonAncestorContainer.parentElement !== editorRef.current) {
+      return
+    }
+
     range.deleteContents()
 
     let node
