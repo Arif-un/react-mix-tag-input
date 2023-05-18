@@ -37,13 +37,14 @@ function TestMixInput() {
 
   return (
     <>
+    <h1>sadfasdfsdf</h1>
       <MixInput
         ref={r}
         // multiline
         value={val}
         onChange={(value) => console.log('===', value)}
       />
-      <button onClick={handleClick}>add tag</button>
+      <button onClick={handleClick}>add tag in state</button>
       <button onClick={() => r.current?.insertContent('_text_')}>insert text</button>
       <button onClick={() => r.current?.insertContent({ type: 'tag', label: 'tag' })}>
         insert tag
