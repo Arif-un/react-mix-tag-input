@@ -7,16 +7,16 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
-    "./package.json": "./package.json",
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.d.js",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
     "./dist/index.css": "./dist/index.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "test": "vitest --watch=false",
