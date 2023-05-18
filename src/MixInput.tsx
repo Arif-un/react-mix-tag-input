@@ -13,7 +13,7 @@ import type { MixInputProps, MixInputRef, MixInputValue } from './MixInputType'
 import { DEFAULT_TAG_CLASS, nodesToArray, tagValueArrToString } from './utils'
 
 const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
-  const { onChange, value, multiline, ...restProps } = props
+  const { onChange, value, multiline, placeholder, ...restProps } = props
   const contentRef = useRef(tagValueArrToString(value))
   const editorRef = useRef<HTMLDivElement | null>(null)
 
@@ -88,6 +88,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
 
   return (
     <div
+      data-placeholder={placeholder}
       aria-label="input"
       role="textbox"
       tabIndex={0}

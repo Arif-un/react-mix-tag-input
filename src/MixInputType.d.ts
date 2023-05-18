@@ -13,6 +13,7 @@ export type MixInputValue = string | Tag
 export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   value?: MixInputValue[]
   multiline?: boolean
+  placeholder?: string
   onChange?: (value: MixInputValue[]) => void
 }
 

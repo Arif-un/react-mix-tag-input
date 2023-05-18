@@ -21,3 +21,9 @@
   border: 1px solid black;
   outline: 2px solid black;
 }
+
+.mix-tag-input:empty::before {
+  content: attr(data-placeholder);
+  position: absolute;
+  color: #646464;
+}
