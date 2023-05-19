@@ -36,7 +36,7 @@ export function nodesToArray(nodes: NodeList | undefined): MixInputValue[] {
   return arr
 }
 
-export function tagValueArrToString(valueArr: MixInputValue[] | undefined): string {
+export function tagValueArrToString(valueArr: MixInputValue[] | undefined, isTagDeletable = false): string {
   if (!Array.isArray(valueArr) || valueArr.length === 0) {
     return ''
   }
@@ -48,7 +48,7 @@ export function tagValueArrToString(valueArr: MixInputValue[] | undefined): stri
     if (typeof item === 'object') {
       const { label, classes } = item
       return (acc += `<span class="${DEFAULT_TAG_CLASS} ${classes || ''
-        }" contenteditable="false">${label}</span>`)
+        }" contenteditable="false">${label} ${isTagDeletable ? '<button class="mtag-delete-btn" contenteditable="false" tabindex="-1">×</button>' : ''}</span>`)
     }
     return ''
   }, '')

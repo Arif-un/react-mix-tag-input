@@ -1,11 +1,3 @@
-.mtag {
-  padding: 3px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  background: #f3f3f3;
-  margin-inline: 3px;
-}
-
 .mix-tag-input {
   padding: 6px;
   border: 1px solid #ccc;
@@ -26,4 +18,38 @@
   content: attr(data-placeholder);
   position: absolute;
   color: #646464;
+}
+
+.mtag {
+  padding: 3px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #f3f3f3;
+  margin-inline: 3px;
+}
+
+.mtag:has(.mtag-delete-btn) {
+  padding-right: 3px;
+}
+
+
+.mtag-delete-btn {
+  font-size: 18px;
+  padding: 3px;
+  margin: 0;
+  margin-left: 4px;
+  height: 16px;
+  width: 16px;
+  line-height: 0.3;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #dbdbdb;
+}
+
+.mtag-delete-btn:hover {
+  background: #ccc;
 }

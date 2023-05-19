@@ -15,6 +15,7 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   multiline?: boolean
   placeholder?: string
   onChange?: (value: MixInputValue[]) => void
+  showTagDeleteBtn?: boolean
 }
 
 export interface MixInputRef {

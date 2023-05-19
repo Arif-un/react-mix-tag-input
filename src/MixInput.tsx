@@ -4,6 +4,8 @@ import React, {
   type ForwardedRef,
   forwardRef,
   type KeyboardEvent,
+  type MouseEvent,
+  type SyntheticEvent,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -13,13 +15,13 @@ import type { MixInputProps, MixInputRef, MixInputValue } from './MixInputType'
 import { DEFAULT_TAG_CLASS, nodesToArray, tagValueArrToString } from './utils'
 
 const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
-  const { onChange, value, multiline, placeholder, ...restProps } = props
-  const contentRef = useRef(tagValueArrToString(value))
+  const { onChange, value, multiline, placeholder, showTagDeleteBtn = true, onClick, ...restProps } = props
+  const contentRef = useRef(tagValueArrToString(value, showTagDeleteBtn))
   const editorRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (!editorRef.current) return
-    editorRef.current.innerHTML = tagValueArrToString(value)
+    editorRef.current.innerHTML = tagValueArrToString(value, showTagDeleteBtn)
   }, [value])
 
   const insertContent = (newContent: MixInputValue) => {
@@ -36,7 +38,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
 
     range.deleteContents()
 
-    let node
+    let node: HTMLSpanElement | Text | null = null
     if (typeof newContent === 'string') {
       node = document.createTextNode(newContent)
       node.textContent = newContent
@@ -48,6 +50,15 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       }
       node.setAttribute('contentEditable', 'false')
       node.innerHTML = newContent.label
+
+      if (showTagDeleteBtn) {
+        const deleteBtn = document.createElement('button')
+        deleteBtn.classList.add('mtag-delete-btn')
+        deleteBtn.setAttribute('contentEditable', 'false')
+        deleteBtn.setAttribute('tabIndex', '-1')
+        deleteBtn.innerHTML = '&times;'
+        node.appendChild(deleteBtn)
+      }
     }
 
     if (!node) {
@@ -86,6 +97,14 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     }
   }
 
+  const handleClicks = (e: SyntheticEvent) => {
+    if (e.target instanceof HTMLButtonElement && e.target.classList.contains('mtag-delete-btn')) {
+      e.target?.parentElement?.remove()
+      onChange?.(nodesToArray(editorRef.current?.childNodes))
+    }
+    onClick?.(e as MouseEvent<HTMLDivElement>)
+  }
+
   return (
     <div
       data-placeholder={placeholder}
@@ -97,6 +116,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       ref={editorRef}
       onInput={handleContentChange}
       onKeyDown={handleKeyDown}
+      onClick={handleClicks}
       dangerouslySetInnerHTML={{ __html: contentRef.current }}
       {...(multiline ? { 'aria-multiline': true } : {})}
       {...restProps}
