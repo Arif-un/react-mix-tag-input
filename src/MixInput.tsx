@@ -15,7 +15,7 @@ import type { MixInputProps, MixInputRef, MixInputValue } from './MixInputType'
 import { DEFAULT_TAG_CLASS, nodesToArray, tagValueArrToString } from './utils'
 
 const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
-  const { onChange, value, multiline, placeholder, showTagDeleteBtn = true, onClick, ...restProps } = props
+  const { onChange, onClick, value, multiline, placeholder, showTagDeleteBtn = true, readonly = false, ...restProps } = props
   const contentRef = useRef(tagValueArrToString(value, showTagDeleteBtn))
   const editorRef = useRef<HTMLDivElement | null>(null)
 
@@ -112,7 +112,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       role="textbox"
       tabIndex={0}
       className="mix-tag-input"
-      contentEditable={true}
+      contentEditable={readonly ? false : true}
       ref={editorRef}
       onInput={handleContentChange}
       onKeyDown={handleKeyDown}
