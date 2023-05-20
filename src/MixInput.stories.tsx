@@ -37,8 +37,10 @@ function TestMixInput() {
 
   return (
     <>
-    <h1>sadfasdfsdf</h1>
+      <h1>Mix Tag Input</h1>
       <MixInput
+        showTagDeleteBtn
+        placeholder='placeholder'
         ref={r}
         // multiline
         value={val}
