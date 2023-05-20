@@ -11,7 +11,10 @@ type MixInputValue = string | Tag
 interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   value?: MixInputValue[]
   multiline?: boolean
+  placeholder?: string
   onChange?: (value: MixInputValue[]) => void
+  showTagDeleteBtn?: boolean
+  readonly?: boolean
 }
 
 interface MixInputRef {
