@@ -2,14 +2,32 @@ import '@total-typescript/ts-reset'
 
 import type { HTMLAttributes } from 'react'
 
-type Tag = {
-  type: 'tag'
+import { MixInputValueTypes } from './MixInputType.d'
+
+export interface TagValueArrToStringParams {
+  valueArr: MixInputValue[] | undefined
+  showTagDeleteBtn: boolean
+  tagsDataRef: {
+    current: Record<string, any>
+  }
+  componentId: string
+}
+
+export interface CreateTagParams {
+  classes: string
+  text: string
+  id: string
+  showTagDeleteBtn: boolean
+}
+
+export type Tag = {
+  type: MixInputValueTypes.TAG
   label: string
   classes?: string
   data?: any
+  tagId?: string
 }
 
-export type MixInputValue = string | Tag
 type LineBreak = {
   type: MixInputValueTypes.LINE_BREAK
 }
@@ -29,4 +47,13 @@ export interface MixInputRef {
   inputRef: HTMLDivElement | null
   insertContent: (newContent: MixInputValue) => void
   getValue: () => MixInputValue[]
+}
+
+interface CreateTagElementParams {
+  componentId: string
+  showTagDeleteBtn: boolean
+  tagsDataRef: {
+    current: Record<string, any>
+  }
+  data: Tag
 }
