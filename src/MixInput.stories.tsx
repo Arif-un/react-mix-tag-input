@@ -24,8 +24,9 @@ export const Default: Story = {
 }
 
 function TestMixInput() {
-  const [val, setVal] = useState<MixInputValue[]>(['123', { type: 'tag', label: 'tag1' }, 'asdf'])
+  const [val, setVal] = useState<MixInputValue[]>(['123', { type: 'tag', label: 'tag1', data: { a: 2 } }, 'asdf'])
   const r = useRef<MixInputRef>(null)
+  // const [value, setValue] = useState()
 
   const handleClick = () => {
     setVal((prev) => {
@@ -37,18 +38,28 @@ function TestMixInput() {
 
   return (
     <>
-      <h1>Mix Tag Input</h1>
+      {/* TODO: text scollable in overflow situation */}
+      {/* TODO: got error select multiple character and remove useing backspace */}
+      {/* TODO: set exact caret position in insert content method */}
+      {/* TODO: test backspace, left and right arrow fuctionality working with <br> */}
+      {/* <h1>Mix Tag Input</h1> */}
       <MixInput
-        showTagDeleteBtn
+        showTagDeleteBtn={false}
         placeholder='placeholder'
         ref={r}
         // multiline
         value={val}
-        onChange={(value) => console.log('===', value)}
+        onChange={(value) => {
+          setVal(value)
+          console.log('===', value)
+        }}
       />
       <button onClick={handleClick}>add tag in state</button>
       <button onClick={() => r.current?.insertContent('_text_')}>insert text</button>
-      <button onClick={() => r.current?.insertContent({ type: 'tag', label: 'tag' })}>
+      <button onClick={() => r.current?.insertContent({ type: 'tag', label: 'tag', data: { e: 2 } })}>
+        insert tag
+      </button>
+      <button onClick={() => r.current?.insertContent({ type: 'tag', label: 'tag 2', data: { e: 2 } })}>
         insert tag
       </button>
       <button
