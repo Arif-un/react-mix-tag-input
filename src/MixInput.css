@@ -1,8 +1,15 @@
 .mix-tag-input {
+  overflow: auto;
   padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: medium;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.mix-tag-input::-webkit-scrollbar {
+  display: none;
 }
 
 .mix-tag-input:hover {
@@ -26,6 +33,7 @@
   border-radius: 3px;
   background: #f3f3f3;
   margin-inline: 3px;
+  display: inline-flex;
 }
 
 .mtag:has(.mtag-delete-btn) {
