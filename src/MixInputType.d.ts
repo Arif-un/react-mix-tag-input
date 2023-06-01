@@ -6,6 +6,7 @@ type Tag = {
   type: 'tag'
   label: string
   classes?: string
+  data?: any
 }
 
 export type MixInputValue = string | Tag
