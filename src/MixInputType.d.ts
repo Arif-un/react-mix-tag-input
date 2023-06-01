@@ -10,6 +10,11 @@ type Tag = {
 }
 
 export type MixInputValue = string | Tag
+type LineBreak = {
+  type: MixInputValueTypes.LINE_BREAK
+}
+
+export type MixInputValue = string | Tag | LineBreak
 
 export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   value?: MixInputValue[]

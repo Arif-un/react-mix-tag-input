@@ -1,6 +1,7 @@
 import { type MixInputValue } from './MixInputType'
 
 export const DEFAULT_TAG_CLASS = 'mtag'
+  LINE_BREAK: 'line-break',
 
 export function nodesToArray(nodes: NodeList | undefined): MixInputValue[] {
 export function nodesToArray(nodes: NodeList | undefined, tagsDataRef: TagValueArrToStringParams['tagsDataRef'], withId = false): MixInputValue[] {
@@ -36,6 +37,9 @@ export function nodesToArray(nodes: NodeList | undefined, tagsDataRef: TagValueA
         ...(tagsDataRef.current[id] ? { data: tagsDataRef.current[id] } : {}),
       })
     }
+    if (arrItem instanceof HTMLElement && arrItem.nodeName === 'BR') {
+      arr.push({ type: MixInputValueTypes.LINE_BREAK })
+    }
   }
 
   return arr
@@ -56,6 +60,8 @@ export function tagValueArrToString(valueArr: MixInputValue[] | undefined, isTag
         }" contenteditable="false">${label} ${isTagDeletable ? '<button class="mtag-delete-btn" contenteditable="false" tabindex="-1">×</button>' : ''}</span>`)
       const id = uniqueId(componentId)
         id,
+    if (typeof item === 'object' && item.type === 'line-break') {
+      return (acc += '<br>')
     }
     return ''
   }, '')
