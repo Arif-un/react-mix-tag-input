@@ -20,6 +20,7 @@ describe('test Mix Input component', () => {
     input.blur()
 
     expect(onChange).toBeCalledTimes(1)
+    expect(onChange).toBeCalledWith(['test text'])
     expect((await findByLabelText('input')).innerHTML).toBe('test text')
   })
 })
