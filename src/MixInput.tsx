@@ -14,7 +14,7 @@ import React, {
 } from 'react'
 
 import { MixInputProps, MixInputRef, MixInputValue, Tag } from './MixInputType'
-import { createTagElement, MixInputValueTypes, nodesToArray, tagValueArrToString, traverseNodes, uniqueId } from './utils'
+import { createTagElement, isTag, MixInputValueTypes, nodesToArray, tagValueArrToString, traverseNodes, uniqueId } from './utils'
 
 const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
   const componentId = useId()
@@ -23,6 +23,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   const contentRef = useRef(tagValueArrToString({ componentId, tagsDataRef, valueArr: value, showTagDeleteBtn }))
   const editorRef = useRef<HTMLDivElement | null>(null)
   const caretPositionRef = useRef<number>(0)
+
 
   useEffect(() => {
     if (!editorRef.current) return
@@ -47,11 +48,11 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     if (typeof newContent === 'string') {
       node = document.createTextNode(newContent)
       node.textContent = newContent
-    } else if (typeof newContent === 'object' && newContent.type === MixInputValueTypes.TAG) {
+    } else if (isTag(newContent)) {
       node = createTagElement({
         componentId,
         tagsDataRef,
-        data: newContent,
+        data: newContent as Tag,
         showTagDeleteBtn,
       })
     } else if (typeof newContent === 'object' && newContent.type === MixInputValueTypes.LINE_BREAK) {
@@ -73,7 +74,8 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     editorRef.current?.focus()
 
     contentRef.current = editorRef.current?.innerHTML ?? ''
-    caretPositionRef.current += (node?.textContent?.length || 0) + 1
+    const caretPostfix = isTag(newContent) ? 1 : 0
+    caretPositionRef.current += (node?.textContent?.length || 0) + caretPostfix
     onChange?.(nodesToArray(editorRef.current?.childNodes, tagsDataRef))
   }
 
@@ -110,9 +112,9 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       if (tagId && charCode === 8203) {
         e.preventDefault()
         const nodeArr = nodesToArray(editorRef.current?.childNodes, tagsDataRef, true)
-        const { label } = nodeArr.find((item) => typeof item === 'object' && item?.type === 'tag' && item?.tagId === tagId) as Tag
+        const { label } = nodeArr.find((item) => isTag(item) && item?.tagId === tagId) as Tag
         const filterTagArr = nodeArr.filter((item) => {
-          if (typeof item === 'object' && item.type === 'tag' && item.tagId === tagId) {
+          if (isTag(item) && item.tagId === tagId) {
             return false
           }
           return true
@@ -129,11 +131,12 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       // if (content === '<br>') {
     } else if (e.key === 'ArrowLeft') {
       const { node, charCode } = getCharacterAtCaretPos(caretPositionRef.current)
-      const tagId = node?.previousSibling?.getAttribute?.('data-id')
+      const tagElement = node?.previousSibling as HTMLSpanElement
+      const tagId = tagElement.getAttribute?.('data-id')
       if (tagId && charCode === 8203) {
         e.preventDefault()
         const tag = editorRef.current?.querySelector(`[data-id="${tagId}"]`)
-        setCaret(caretPositionRef.current - tag.textContent.length - 1)
+        setCaret(caretPositionRef.current - (tag?.textContent?.length || 0) - 1)
       }
       return
     } else if (e.key === 'ArrowRight') {
@@ -141,7 +144,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       const { node } = getCharacterAtCaretPos(targetPos)
       if (node?.nodeName === 'SPAN') {
         e.preventDefault()
-        setCaret(caretPositionRef.current + node.textContent.length + 1)
+        setCaret(caretPositionRef.current + (node?.textContent?.length || 0) + 1)
       }
       return
     } else if (e.key !== 'Delete') {
@@ -275,7 +278,6 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
 
     if (foundNode?.textContent) {
       const index = targetPos - nodeIndex - 1
-      // const tagId = foundNode?.previousSibling?.getAttribute?.('data-id')
       const char = foundNode.textContent[index]
       return { charCode: char?.charCodeAt(0), node: foundNode, nodeIndex, index }
     }
@@ -286,6 +288,8 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   const handleSelectionChange = (e: SyntheticEvent<HTMLDivElement, Event>) => {
     onSelect?.(e)
     caretPositionRef.current = getCaretPosition()
+    console.log('cursor pos', caretPositionRef.current)
+
   }
 
   const handlePaste = (e: any) => {
