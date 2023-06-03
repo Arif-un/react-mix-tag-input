@@ -4,9 +4,15 @@ type Tag = {
   type: 'tag'
   label: string
   classes?: string
+  data?: any
+  tagId?: string
 }
 
-type MixInputValue = string | Tag
+type LineBreak = {
+  type: 'line-break'
+}
+
+type MixInputValue = string | Tag | LineBreak
 
 interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   value?: MixInputValue[]

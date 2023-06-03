@@ -5,7 +5,7 @@ export const DEFAULT_TAG_CLASS = 'mtag'
 export const MixInputValueTypes = {
   TAG: 'tag',
   LINE_BREAK: 'line-break',
-} as const
+}
 
 export function nodesToArray(nodes: NodeList | undefined, tagsDataRef: TagValueArrToStringParams['tagsDataRef'], withId = false): MixInputValue[] {
   if (!nodes) return []

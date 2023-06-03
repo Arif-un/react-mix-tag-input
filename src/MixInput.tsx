@@ -10,7 +10,6 @@ import React, {
   useId,
   useImperativeHandle,
   useRef,
-  useState,
 } from 'react'
 
 import { MixInputProps, MixInputRef, MixInputValue, Tag } from './MixInputType'
