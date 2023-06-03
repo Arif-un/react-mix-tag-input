@@ -203,47 +203,6 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     return caretOffset
   }
 
-
-  function setCaretPosition(position: number) {
-    const targetPosition = position
-    let targetNode: HTMLElement | Node | Text | null = editorRef.current
-    const childs = targetNode?.childNodes ? Array.from(targetNode.childNodes) : []
-    // console.clear()
-    let index = 0
-    for (let i = 0; i < childs.length; i += 1) {
-      const child = childs[i]
-      // console.log('=====', childs.length, index, targetPosition)
-      // console.log(child.length)
-      // console.log(index, child, child.length)
-      if (child && child.nodeName === '#text' && child instanceof Text) {
-
-        if (index + child.length >= targetPosition) {
-          targetNode = child
-          index = targetPosition - index
-          break
-        } else {
-          index += child.length
-        }
-        // targetPosition -= child.length // 1
-      } else if (child.nodeName === 'SPAN') {
-        if (index + child?.textContent?.length >= targetPosition) {
-          targetNode = child
-          index = targetPosition - index
-          break
-        } else {
-          index += child.textContent?.length
-        }
-      }
-    }
-
-    const selection = window.getSelection()
-
-    if (targetNode?.length >= index) {
-      console.log('caret setted')
-      selection?.setBaseAndExtent(targetNode as Node, index, targetNode as Node, index)
-    }
-  }
-
   useEffect(() => {
     setCaret(caretPositionRef.current)
   }, [caretPositionRef.current, value])
@@ -301,29 +260,23 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   }
 
   return (
-    <>
-      <button onClick={() => {
-        setCaretPosition(10)
-        editorRef.current?.focus()
-      }}>asdasd</button>
-      <div
-        data-placeholder={placeholder}
-        aria-label="input"
-        role="textbox"
-        tabIndex={0}
-        className="mix-tag-input"
-        contentEditable={readonly ? false : true}
-        ref={editorRef}
-        onInput={handleContentChange}
-        onKeyDown={handleKeyDown}
-        onClick={handleClicks}
-        onSelect={handleSelectionChange}
-        onPaste={handlePaste}
-        dangerouslySetInnerHTML={{ __html: contentRef.current }}
-        {...(multiline ? { 'aria-multiline': true } : {})}
-        {...restProps}
-      />
-    </>
+    <div
+      data-placeholder={placeholder}
+      aria-label="input"
+      role="textbox"
+      tabIndex={0}
+      className="mix-tag-input"
+      contentEditable={readonly ? false : true}
+      ref={editorRef}
+      onInput={handleContentChange}
+      onKeyDown={handleKeyDown}
+      onClick={handleClicks}
+      onSelect={handleSelectionChange}
+      onPaste={handlePaste}
+      dangerouslySetInnerHTML={{ __html: contentRef.current }}
+      {...(multiline ? { 'aria-multiline': true } : {})}
+      {...restProps}
+    />
   )
 })
 
