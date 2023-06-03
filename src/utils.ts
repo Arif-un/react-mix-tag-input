@@ -35,7 +35,7 @@ export function nodesToArray(nodes: NodeList | undefined, tagsDataRef: TagValueA
       const classes = arrItem?.classList?.value.replace(DEFAULT_TAG_CLASS, '').trim()
       const id = arrItem?.dataset?.id || ''
       arr.push({
-        tagId: id,
+        ...(withId ? { tagId: id } : {}),
         type: MixInputValueTypes.TAG,
         label: arrItem.innerHTML || arrItem.innerText,
         ...(classes ? { classes } : {}),
@@ -68,7 +68,7 @@ export function tagValueArrToString({ valueArr, showTagDeleteBtn = false, tagsDa
     if (typeof item === 'string') {
       return (acc += item)
     }
-    if (typeof item === 'object' && item.type === MixInputValueTypes.TAG) {
+    if (isTag(item)) {
       const { label, classes, data } = item as Tag
       const id = uniqueId(componentId)
       if (data) {
@@ -137,10 +137,11 @@ export function createTagElement({ componentId, tagsDataRef, showTagDeleteBtn, d
   return elm
 }
 
-export function traverseNodes(elm: Element, targetPos: number): {
+export function traverseNodes(elm: Element | null, targetPos: number): {
   foundNode: Node | undefined
   nodeIndex: number
 } {
+  if (!elm) return { foundNode: undefined, nodeIndex: 0 }
   let foundNode = null
   let currentPos = 0
   const nodes = Array.from(elm.childNodes)
@@ -162,4 +163,8 @@ export function traverseNodes(elm: Element, targetPos: number): {
     currentPos = foundNode?.textContent?.length || 0
   }
   return { foundNode, nodeIndex: currentPos }
+}
+
+export function isTag(item: MixInputValue): item is Tag {
+  return typeof item === 'object' && item.type === MixInputValueTypes.TAG
 }
