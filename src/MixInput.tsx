@@ -160,31 +160,6 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     onClick?.(e as MouseEvent<HTMLDivElement>)
   }
 
-
-  // const getCurrentCursorPosition = () => {
-  //   const selection = window.getSelection()
-  //   if (selection.rangeCount === 0) return null
-
-  //   const range = selection.getRangeAt(0)
-  //   const parent = range.commonAncestorContainer
-  //   const nodes = [...parent.childNodes]
-
-  //   let cursorPosition = 0
-  //   for (const node of nodes) {
-  //     if (node === range.startContainer) {
-  //       cursorPosition += range.startOffset
-  //       break
-  //     } else if (node.nodeType === Node.TEXT_NODE) {
-  //       cursorPosition += node.length
-  //     } else {
-  //       cursorPosition += node.textContent.length
-  //     }
-  //   }
-  //   console.log({ cursorPosition })
-
-  //   return cursorPosition
-  // }
-
   function getCaretPosition() {
     let caretOffset = 0
 
