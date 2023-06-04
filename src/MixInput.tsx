@@ -1,6 +1,7 @@
 import './MixInput.css'
 
 import React, {
+  type ClipboardEvent,
   type ForwardedRef,
   forwardRef,
   type KeyboardEvent,
@@ -246,11 +247,8 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   const handleSelectionChange = (e: SyntheticEvent<HTMLDivElement, Event>) => {
     onSelect?.(e)
     caretPositionRef.current = getCaretPosition()
-    console.log('cursor pos', caretPositionRef.current)
-
   }
 
-  const handlePaste = (e: any) => {
   const handlePaste = (e: ClipboardEvent<HTMLDivElement>) => {
     e.preventDefault()
     const clipboardData = e.clipboardData
