@@ -2,6 +2,7 @@ import './MixInput.css'
 
 import React, {
   type ClipboardEvent,
+  type FocusEvent,
   type ForwardedRef,
   forwardRef,
   type KeyboardEvent,
@@ -19,7 +20,7 @@ import { createTagElement, isBr, isTag, MixInputValueTypes, nodesToArray, tagVal
 const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
   const componentId = useId()
   const tagsDataRef = useRef<Record<string, any>>({})
-  const { onChange, onClick, value, multiline, placeholder, showTagDeleteBtn = true, readonly = false, onPaste, onKeyDown, onSelect, ...restProps } = props
+  const { onChange, onClick, value, multiline, placeholder, showTagDeleteBtn = true, readonly = false, onPaste, onKeyDown, onSelect, onFocus, ...restProps } = props
   const contentRef = useRef(tagValueArrToString({ componentId, tagsDataRef, valueArr: value, showTagDeleteBtn }))
   const editorRef = useRef<HTMLDivElement | null>(null)
   const caretPositionRef = useRef<number>(0)
@@ -232,6 +233,11 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     onPaste?.(e)
   }
 
+  const handleFocus = (e: FocusEvent<HTMLDivElement, Element>) => {
+    setCaret(caretPositionRef.current - 1)
+    onFocus?.(e)
+  }
+
   return (
     <div
       data-placeholder={placeholder}
@@ -246,6 +252,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       onClick={handleClicks}
       onSelect={handleSelectionChange}
       onPaste={handlePaste}
+      onFocus={handleFocus}
       dangerouslySetInnerHTML={{ __html: contentRef.current }}
       {...(multiline ? { 'aria-multiline': true } : {})}
       {...restProps}
