@@ -251,6 +251,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   }
 
   const handlePaste = (e: any) => {
+  const handlePaste = (e: ClipboardEvent<HTMLDivElement>) => {
     e.preventDefault()
     const clipboardData = e.clipboardData
     const pastedData = clipboardData.getData('text/plain')
