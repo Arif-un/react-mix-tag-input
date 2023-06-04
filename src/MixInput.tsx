@@ -148,7 +148,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
         setCaret(caretPositionRef.current + (node?.textContent?.length || 0) + 1)
       }
       return
-    } else if (e.key !== 'Delete') {
+    } else if (e.key !== 'Delete' && e.key !== 'Tab') {
       caretPositionRef.current += 1
     }
   }
@@ -234,7 +234,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   }
 
   const handleFocus = (e: FocusEvent<HTMLDivElement, Element>) => {
-    setCaret(caretPositionRef.current - 1)
+    setCaret(caretPositionRef.current)
     onFocus?.(e)
   }
 
