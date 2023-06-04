@@ -1,5 +1,5 @@
 
-import { CreateTagElementParams, CreateTagParams, type MixInputValue, Tag, TagValueArrToStringParams } from './MixInputType'
+import { CreateTagElementParams, CreateTagParams, type MixInputValue, Tag, TagValueArrToStringParams, LineBreak } from './MixInputType'
 
 export const DEFAULT_TAG_CLASS = 'mtag'
 export const MixInputValueTypes = {
@@ -167,4 +167,8 @@ export function traverseNodes(elm: Element | null, targetPos: number): {
 
 export function isTag(item: MixInputValue): item is Tag {
   return typeof item === 'object' && item.type === MixInputValueTypes.TAG
+}
+
+export function isBr(item: MixInputValue): item is LineBreak {
+  return typeof item === 'object' && item.type === MixInputValueTypes.LINE_BREAK
 }

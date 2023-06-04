@@ -14,7 +14,7 @@ import React, {
 } from 'react'
 
 import { MixInputProps, MixInputRef, MixInputValue, Tag } from './MixInputType'
-import { createTagElement, isTag, MixInputValueTypes, nodesToArray, tagValueArrToString, traverseNodes, uniqueId } from './utils'
+import { createTagElement, isBr, isTag, MixInputValueTypes, nodesToArray, tagValueArrToString, traverseNodes, uniqueId } from './utils'
 
 const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
   const componentId = useId()
@@ -74,7 +74,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     editorRef.current?.focus()
 
     contentRef.current = editorRef.current?.innerHTML ?? ''
-    const caretPostfix = isTag(newContent) ? 1 : 0
+    const caretPostfix = (isTag(newContent) || isBr(newContent)) ? 1 : 0
     caretPositionRef.current += (node?.textContent?.length || 0) + caretPostfix
     onChange?.(nodesToArray(editorRef.current?.childNodes, tagsDataRef))
   }
