@@ -135,14 +135,16 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
         if (editorRef?.current) {
           editorRef.current.innerHTML = nodeStr
         }
+
         setCaret(caretPositionRef.current - label.length - 1)
+      } else if (caretPositionRef.current > 0) {
+        caretPositionRef.current -= 1
       }
-      caretPositionRef.current -= 1
       return
     } else if (e.key === 'ArrowLeft') {
       const { node, charCode } = getCharacterAtCaretPos(caretPositionRef.current)
       const tagElement = node?.previousSibling as HTMLSpanElement
-      const tagId = tagElement.getAttribute?.('data-id')
+      const tagId = tagElement?.getAttribute?.('data-id')
       if (tagId && charCode === 8203) {
         e.preventDefault()
         const tag = editorRef.current?.querySelector(`[data-id="${tagId}"]`)
@@ -232,6 +234,13 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   const handleSelectionChange = (e: SyntheticEvent<HTMLDivElement, Event>) => {
     onSelect?.(e)
     caretPositionRef.current = getCaretPosition()
+
+    // prevent place cursor before ZeroWidthWhiteSpace
+    const { charCode } = getCharacterAtCaretPos(caretPositionRef.current + 1)
+    if (charCode === 8203) {
+      caretPositionRef.current += 1
+      setCaret(caretPositionRef.current)
+    }
   }
 
   const handlePaste = (e: ClipboardEvent<HTMLDivElement>) => {

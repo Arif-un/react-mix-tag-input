@@ -45,6 +45,8 @@ export interface MixInputRef {
   inputRef: HTMLDivElement | null
   insertContent: (newContent: MixInputValue | MixInputValue[]) => void
   getValue: () => MixInputValue[]
+  caretPosition: number
+  setCaret: (offset: number) => void
 }
 
 interface CreateTagElementParams {
