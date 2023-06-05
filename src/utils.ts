@@ -205,17 +205,3 @@ export function arrayToHtmlNode({ item, componentId, tagsDataRef, showTagDeleteB
     }).reverse()
   }
 }
-
-export function getCaretPostfix(content: MixInputValue | MixInputValue[]): number {
-  if (Array.isArray(content)) {
-    const lastItem = content.at(-1)
-    if (lastItem) {
-      if (isBr(lastItem) || isTag(lastItem)) {
-        return 1
-      }
-    }
-  } else if (isBr(content) || isTag(content)) {
-    return 1
-  }
-  return 0
-}
