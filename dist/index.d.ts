@@ -25,7 +25,7 @@ interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
 
 interface MixInputRef {
   inputRef: HTMLDivElement | null
-  insertContent: (newContent: MixInputValue) => void
+  insertContent: (newContent: MixInputValue | MixInputValue[]) => void
   getValue: () => MixInputValue[]
 }
 
