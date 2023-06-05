@@ -43,7 +43,7 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
 
 export interface MixInputRef {
   inputRef: HTMLDivElement | null
-  insertContent: (newContent: MixInputValue) => void
+  insertContent: (newContent: MixInputValue | MixInputValue[]) => void
   getValue: () => MixInputValue[]
 }
 
@@ -54,4 +54,14 @@ interface CreateTagElementParams {
     current: Record<string, any>
   }
   data: Tag
+}
+
+type MixInputValueNodeType = HTMLSpanElement | HTMLBRElement | Text | undefined
+interface ArrayToHtmlNodeType {
+  item: MixInputValue | MixInputValue[]
+  componentId: string
+  tagsDataRef: {
+    current: any
+  }
+  showTagDeleteBtn: boolean
 }

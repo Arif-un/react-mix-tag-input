@@ -15,7 +15,7 @@ import React, {
 } from 'react'
 
 import { MixInputProps, MixInputRef, MixInputValue, Tag } from './MixInputType'
-import { createTagElement, isBr, isTag, MixInputValueTypes, nodesToArray, tagValueArrToString, traverseNodes, uniqueId } from './utils'
+import { arrayToHtmlNode, getCaretPostfix, isTag, nodesToArray, tagValueArrToString, traverseNodes } from './utils'
 
 const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
   const componentId = useId()
@@ -25,13 +25,12 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   const editorRef = useRef<HTMLDivElement | null>(null)
   const caretPositionRef = useRef<number>(0)
 
-
   useEffect(() => {
     if (!editorRef.current) return
     editorRef.current.innerHTML = tagValueArrToString({ componentId, tagsDataRef, valueArr: value, showTagDeleteBtn })
   }, [value])
 
-  const insertContent = (newContent: MixInputValue) => {
+  const insertContent = (newContent: MixInputValue | MixInputValue[]) => {
     const selection = window.getSelection()
     if (!selection) {
       return
@@ -45,19 +44,39 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
 
     range.deleteContents()
 
-    let node: HTMLSpanElement | Text | null = null
-    if (typeof newContent === 'string') {
-      node = document.createTextNode(newContent)
-      node.textContent = newContent
-    } else if (isTag(newContent)) {
-      node = createTagElement({
-        componentId,
-        tagsDataRef,
-        data: newContent as Tag,
-        showTagDeleteBtn,
+    const node = arrayToHtmlNode({
+      item: newContent,
+      componentId,
+      tagsDataRef,
+      showTagDeleteBtn,
+    })
+
+    let nodeContentLength = 0
+
+    if (Array.isArray(node)) {
+      node.forEach((elm) => {
+        if (elm) {
+          if (elm.nodeName !== 'BR') {
+            nodeContentLength += elm.textContent?.length || 0
+          }
+          if (elm.nodeName === 'SPAN') {
+            nodeContentLength += 1
+          }
+          range.insertNode(elm)
+          range.setEndAfter(elm)
+        }
       })
-    } else if (typeof newContent === 'object' && newContent.type === MixInputValueTypes.LINE_BREAK) {
-      node = document.createElement('br')
+    } else {
+      if (node) {
+        if (node.nodeName !== 'BR') {
+          nodeContentLength += node.textContent?.length || 0
+        }
+        if (node.nodeName === 'SPAN') {
+          nodeContentLength += 1
+        }
+        range.insertNode(node)
+        range.setEndAfter(node)
+      }
     }
 
     if (!node) {
@@ -65,18 +84,10 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       return
     }
 
-    range.insertNode(node)
-
-    const newRange = document.createRange()
-    newRange.setStartAfter(node)
-    newRange.setEndAfter(node)
-    selection.removeAllRanges()
-    selection.addRange(newRange)
-    editorRef.current?.focus()
-
     contentRef.current = editorRef.current?.innerHTML ?? ''
-    const caretPostfix = (isTag(newContent) || isBr(newContent)) ? 1 : 0
-    caretPositionRef.current += (node?.textContent?.length || 0) + caretPostfix
+    const caretPostfix = getCaretPostfix(newContent)
+    caretPositionRef.current += nodeContentLength + caretPostfix
+    editorRef.current?.focus()
     onChange?.(nodesToArray(editorRef.current?.childNodes, tagsDataRef))
   }
 
@@ -129,7 +140,6 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       }
       caretPositionRef.current -= 1
       return
-      // if (content === '<br>') {
     } else if (e.key === 'ArrowLeft') {
       const { node, charCode } = getCharacterAtCaretPos(caretPositionRef.current)
       const tagElement = node?.previousSibling as HTMLSpanElement
@@ -204,6 +214,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
 
       sel.removeAllRanges()
       sel.addRange(range)
+      caretPositionRef.current = pos
     }
   }
 
@@ -218,7 +229,6 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     }
     return {}
   }
-
 
   const handleSelectionChange = (e: SyntheticEvent<HTMLDivElement, Event>) => {
     onSelect?.(e)

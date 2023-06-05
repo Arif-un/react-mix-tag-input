@@ -1,11 +1,11 @@
 
-import { CreateTagElementParams, CreateTagParams, type MixInputValue, Tag, TagValueArrToStringParams, LineBreak } from './MixInputType'
+import { ArrayToHtmlNodeType, CreateTagElementParams, CreateTagParams, LineBreak, type MixInputValue, MixInputValueNodeType, Tag, TagValueArrToStringParams } from './MixInputType'
 
 export const DEFAULT_TAG_CLASS = 'mtag'
 export const MixInputValueTypes = {
   TAG: 'tag',
   LINE_BREAK: 'line-break',
-}
+} as const
 
 export function nodesToArray(nodes: NodeList | undefined, tagsDataRef: TagValueArrToStringParams['tagsDataRef'], withId = false): MixInputValue[] {
   if (!nodes) return []
@@ -171,4 +171,51 @@ export function isTag(item: MixInputValue): item is Tag {
 
 export function isBr(item: MixInputValue): item is LineBreak {
   return typeof item === 'object' && item.type === MixInputValueTypes.LINE_BREAK
+}
+
+export function arrayToHtmlNode({ item, componentId, tagsDataRef, showTagDeleteBtn }: ArrayToHtmlNodeType): MixInputValueNodeType | MixInputValueNodeType[] | null {
+  if (typeof item === 'string') {
+    const node = document.createTextNode(item)
+    node.textContent = item
+    return node
+  } else if (isTag(item as MixInputValue)) {
+    return createTagElement({
+      componentId,
+      tagsDataRef,
+      data: item as Tag,
+      showTagDeleteBtn,
+    })
+  } else if (isBr(item as MixInputValue)) {
+    return document.createElement('br')
+  } else if (Array.isArray(item)) {
+    return item.map((itm: MixInputValue | unknown) => {
+      if (typeof itm === 'string') {
+        const node = document.createTextNode(itm)
+        node.textContent = itm as string
+        return node
+      } else if (isTag(itm as MixInputValue)) {
+        const tagElm = createTagElement({
+          componentId,
+          tagsDataRef,
+          data: itm as Tag,
+          showTagDeleteBtn,
+        })
+        return tagElm
+      }
+    }).reverse()
+  }
+}
+
+export function getCaretPostfix(content: MixInputValue | MixInputValue[]): number {
+  if (Array.isArray(content)) {
+    const lastItem = content.at(-1)
+    if (lastItem) {
+      if (isBr(lastItem) || isTag(lastItem)) {
+        return 1
+      }
+    }
+  } else if (isBr(content) || isTag(content)) {
+    return 1
+  }
+  return 0
 }
