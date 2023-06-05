@@ -94,6 +94,8 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     inputRef: editorRef.current,
     insertContent,
     getValue: () => nodesToArray(editorRef.current?.childNodes, tagsDataRef),
+    setCaret: (pos: number) => setCaret(pos),
+    caretPosition: caretPositionRef.current,
   }))
 
   const handleContentChange = () => {
