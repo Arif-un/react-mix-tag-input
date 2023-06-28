@@ -32,8 +32,10 @@ function TestMixInput() {
     setVal((prev) => {
       const prevVal = structuredClone(prev)
       prevVal.splice(1, 0, { type: 'tag', label: 'tag2' })
-      return prevVal
+      // return prevVal
+      return ['asdf', 'asdf', { type: 'tag', label: 'tag2' }, 'sdafasdf']
     })
+    r.current?.inputRef?.focus()
   }
 
   return (
@@ -47,18 +49,30 @@ function TestMixInput() {
         showTagDeleteBtn={false}
         placeholder='placeholder'
         ref={r}
-        // multiline
+        multiline
         value={val}
         onChange={(value) => {
           setVal(value)
-          console.log('===', value)
+          console.log('===onchange story', value)
         }}
       />
+
+      <select name="" id="">
+        <option value="1">test 1</option>
+        <option value="2">test 2</option>
+        <option value="3">test 3</option>
+      </select>
+      <input type="text" />
       <button onClick={handleClick}>add tag in state</button>
       <button onClick={() => r.current?.insertContent('_text_')}>insert text</button>
-      <button onClick={() => r.current?.insertContent({ type: 'tag', label: 'tag', data: { e: 2 } })}>
+      <button onClick={() => r.current?.insertContent([
+        '4444',
+        { type: 'tag', label: 'tag', data: { e: 2 } },
+        { type: 'tag', label: 'tag2', data: { e: 2 } },
+        'asdadas',
+      ])}>
         insert tag
-      </button>
+      </button >
       <button onClick={() => r.current?.insertContent({ type: 'tag', label: 'tag 2', data: { e: 2 } })}>
         insert tag
       </button>
