@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 
-import { nodesToArray } from '../utils'
-
+import { type MixInputValue } from '../MixInputType'
+import { injectInArray, nodesToArray } from '../utils'
 
 describe('nodesToArray', () => {
   const tagsDataRef = { current: { '1': { foo: 'bar' } } }
@@ -64,5 +64,60 @@ describe('nodesToArray', () => {
     wrapperElm.appendChild(node)
     const result = nodesToArray(wrapperElm.childNodes, tagsDataRef)
     expect(result).toEqual([{ type: 'line-break' }])
+  })
+})
+
+describe('injectInArray', () => {
+  const tag1 = { type: 'tag', label: 'tag1' } satisfies MixInputValue
+  const tag2 = { type: 'tag', label: 'tag2' } satisfies MixInputValue
+
+  test('insert string in empty array', () => {
+    const result = injectInArray([], 'foo', 0)
+    expect(result).toEqual(['foo'])
+  })
+
+  test('insert string at the beginning of array', () => {
+    const result = injectInArray(['bar'], 'foo', 0)
+    expect(result).toEqual(['foobar'])
+  })
+
+  test('insert object at the beginning of array', () => {
+    const result = injectInArray(['bar'], tag1, 0)
+    expect(result).toEqual([tag1, 'bar'])
+  })
+
+  test('insert string at specific position of array', () => {
+    const result = injectInArray(['bar'], 'foo', 2)
+    expect(result).toEqual(['bafoor'])
+  })
+
+  test('insert object at specific position of array', () => {
+    const result = injectInArray(['bar'], tag1, 2)
+    expect(result).toEqual(['ba', tag1, 'r'])
+  })
+  test('insert object at specific position of array', () => {
+    const tag3 = { type: 'tag', label: 'tag3' } satisfies MixInputValue
+    const result = injectInArray(['123', tag1], tag3, 9)
+    expect(result).toEqual(['123', tag1, tag3])
+  })
+
+  test('insert array of string  at specific position of array', () => {
+    const result = injectInArray(['bar'], ['11', '44'], 2)
+    expect(result).toEqual(['ba1144r'])
+  })
+
+  test('insert array of string  at beginning  of array', () => {
+    const result = injectInArray(['bar'], ['11', '44'], 0)
+    expect(result).toEqual(['1144bar'])
+  })
+
+  test('insert array of object at specific position of array', () => {
+    const result = injectInArray(['bar'], [tag1, tag2], 2)
+    expect(result).toEqual(['ba', tag1, tag2, 'r'])
+  })
+
+  test('insert array of object at beginning of array', () => {
+    const result = injectInArray(['bar'], [tag1, tag2], 0)
+    expect(result).toEqual([tag1, tag2, 'bar'])
   })
 })
