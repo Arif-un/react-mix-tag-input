@@ -45,8 +45,9 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
 
 export interface MixInputRef {
   inputRef: HTMLDivElement | null
-  insertContent: (newContent: MixInputValue) => void
-  getValue: () => MixInputValue[]
+  insertContent: (newContent: MixInputValue | MixInputValue[]) => void
+  caretPosition: number
+  setCaret: (offset: number) => void
 }
 
 interface CreateTagElementParams {
