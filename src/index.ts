@@ -1,10 +1,10 @@
 import MixInput from './MixInput'
-import type { MixInputProps, MixInputRef, MixInputValue } from './MixInputType.d'
+import type { MixInputProps, MixInputRef, MixInputValues } from './MixInputType.d'
 export default MixInput
 
 
 export type {
   MixInputProps,
   MixInputRef,
-  MixInputValue,
+  MixInputValues,
 }

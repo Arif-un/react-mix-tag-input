@@ -1,11 +1,14 @@
 .mix-tag-input {
   overflow: auto;
+  width: 300px;
   padding: 6px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: medium;
   -ms-overflow-style: none;
+  overflow-x: scroll;
   scrollbar-width: none;
+  white-space: nowrap;
 }
 
 .mix-tag-input::-webkit-scrollbar {
