@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 18.16.0
+      - name: Use Node.js latest
         uses: actions/setup-node@v3
         with:
           node-version: 'latest'
