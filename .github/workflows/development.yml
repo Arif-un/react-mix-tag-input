@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 'lts/*'
+          node-version: 'latest'
       - name: Install dependencies
         run: yarn install
       - name: Lint
