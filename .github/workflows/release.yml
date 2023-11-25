@@ -24,10 +24,10 @@ jobs:
     needs: [quality]
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js
+      - name: Use Node.js latest
         uses: actions/setup-node@v3
         with:
-          node-version: 18.16.0
+          node-version: 'latest'
       - run: npx semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
