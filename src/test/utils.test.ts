@@ -14,6 +14,15 @@ describe('find node by caret index', () => {
   div.innerHTML = 'Hello, <span>span</span>&ZeroWidthSpace;World!<b>b</b>&ZeroWidthSpace;111'
   //              |---7---|    |-4-|       |-----1--------|---6--|--1-|  |------1-------|-3-| = total length = 23
 
+  const div2 = document.createElement('div')
+  div2.innerHTML = '&ZeroWidthSpace;<span>span</span>&ZeroWidthSpace;World!<b>b</b>&ZeroWidthSpace;111'
+
+  test('div2 try caret place first index before zerowidthspace, caret should be after zerowidthspace ', () => {
+    const { node, possibleCaretIndex } = findPossibleCaretSetNodeAndIndex(div2, 0)
+    expect(possibleCaretIndex).toBe(1)
+    expect(removeZeroWidthSpace(node?.textContent || '')).toBe('')
+  })
+
   test('try caret inside div but possible caret pos will be next text node', () => {
     const { node, possibleCaretIndex } = findPossibleCaretSetNodeAndIndex(div, 9)
     expect(possibleCaretIndex).toBe(1)
@@ -157,7 +166,7 @@ describe('test tagValueArrToString', () => {
     ]
     const result = tagValueArrToString({ tagClassName: 'tag-class', valueArr })
     const expectedOutput =
-      'Text Before Tag&ZeroWidthSpace;<span class="tag-class other-class" data-id="123" contenteditable="false">Tag Content</span>&ZeroWidthSpace;Text After Tag'
+      'Text Before Tag<span class="tag-class other-class" data-id="123" contenteditable="false">Tag Content</span>Text After Tag'
     expect(result).toBe(expectedOutput)
   })
 

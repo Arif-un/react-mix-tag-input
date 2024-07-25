@@ -91,16 +91,17 @@ export const MixInputTestInteraction: Story = {
 }
 
 function TestMixInput() {
+  const id = Math.random().toString()
   const [val, setVal] = useState<MixInputValue[]>([
     'Hlo, ',
     { type: 'tag', label: 'an' },
     'Wld!',
-    { type: 'tag', label: 'ok', id: 'asd', class: 'asd' },
-    '234',
+    { type: 'tag', label: 'ok', id, class: 'asd' },
+    '2',
   ])
   const ref = useRef<MixInputRef>(null)
 
-  console.log('parent', ref.current, val)
+  // console.log('parent', ref.current, val)
 
   return (
     <>

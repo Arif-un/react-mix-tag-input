@@ -37,6 +37,16 @@ export function findPossibleCaretSetNodeAndIndex(elm: Element, targetPosition: n
     }
   }
 
+  const isCaretPositionBeforeZeroWidthSpace = isZeroWidthSpace(nodesArr[0]?.textContent) && targetPosition === 0
+
+  if (isCaretPositionBeforeZeroWidthSpace) {
+    return {
+      node: nodesArr.at(0),
+      possibleCaretIndex: 1,
+      nodeIndex: 0,
+    }
+  }
+
   let currentContentLength = 0
   let previousNodesContentLength = 0
 
@@ -59,9 +69,10 @@ export function findPossibleCaretSetNodeAndIndex(elm: Element, targetPosition: n
     }
 
     if (node.nodeType === ELEMENT_NODE && currentContentLength >= targetPosition) {
+      const nextTextNodeIsZeroWidthSpace = isZeroWidthSpace(nodesArr[i + 1]?.textContent)
       return {
         node: nodesArr[i + 1],
-        possibleCaretIndex: 1,
+        possibleCaretIndex: nextTextNodeIsZeroWidthSpace ? 1 : 0,
         nodeIndex: i + 1,
       }
     }
@@ -88,7 +99,7 @@ export function createTag({ props, tagClassName, showTagDeleteBtn }: CreateTagPa
   if (type !== 'tag') return ''
 
   //&ZeroWidthSpace; is used to prevent the browser from collapsing multiple spaces into one
-  return `&ZeroWidthSpace;<span class="${tagClassName || ''} ${classes || ''}" ${objToHtmlAttr(restProps)}contenteditable="false">${label.trim()}${showTagDeleteBtn ? '<button class="mtag-delete-btn" contenteditable="false" tabindex="-1">×</button>' : ''}</span>&ZeroWidthSpace;`
+  return `<span class="${tagClassName || ''} ${classes || ''}" ${objToHtmlAttr(restProps)}contenteditable="false">${label.trim()}${showTagDeleteBtn ? '<button class="mtag-delete-btn" contenteditable="false" tabindex="-1">×</button>' : ''}</span>`
 }
 
 export function isZeroWidthSpace(char: string | undefined | null) {
@@ -103,7 +114,7 @@ export function removeZeroWidthSpace(str: string): string {
 export function setCaretPosition(elm: Element | null, targetCaretPos: number, isBrPlaced: boolean = false) {
   if (!elm) return
   let { node, possibleCaretIndex } = findPossibleCaretSetNodeAndIndex(elm, targetCaretPos)
-
+  console.log('caret set target and possible', { targetCaretPos, possibleCaretIndex, node })
   if (isBrPlaced && node?.nextSibling?.nodeName === 'BR') {
     node = node?.nextSibling.nextSibling || undefined
     possibleCaretIndex = 0
@@ -149,7 +160,7 @@ export function getCaretInfo(element: HTMLElement | null) {
 export function stripHtml(html: string) {
   const div = document.createElement('DIV')
   div.innerHTML = html
-  return div.innerText || div.textContent || ''
+  return div.textContent || div.innerText || ''
 }
 
 export function createHtmlContent(contentStr: string) {
@@ -170,7 +181,11 @@ export function getCaretPosition(element: HTMLElement | null) {
       preCaretRange.selectNodeContents(element)
       preCaretRange.setEnd(range.endContainer, range.endOffset)
       caretOffset = preCaretRange.toString().length
+    } else {
+      return
     }
+  } else {
+    return
   }
 
   return caretOffset
@@ -182,17 +197,31 @@ export function tagValueArrToString({ tagClassName, valueArr, showTagDeleteBtn =
     return ''
   }
   if (!valueArr.length) return ''
+  console.log('tag value to html')
+  return valueArr.reduce((acc: string, item: MixInputValue, i: number) => {
 
-  return valueArr.reduce((acc: string, item: MixInputValue) => {
     if (typeof item === 'string') {
       return (acc += item)
     }
     if (isTag(item)) {
-      return (acc += createTag({
+      const isFirstItemIsTag = i === 0
+      const isLastItemIsTag = i === valueArr.length - 1
+      const isPreviousItemIsTag = i > 0 && isTag(valueArr[i - 1])
+
+      if (isFirstItemIsTag || isPreviousItemIsTag) {
+        acc += '&ZeroWidthSpace;'
+      }
+
+      acc += createTag({
         props: item,
         showTagDeleteBtn,
         tagClassName,
-      }))
+      })
+
+      acc += isLastItemIsTag ? '&ZeroWidthSpace;' : ''
+
+      console.log('==========================', acc)
+      return acc
     }
     if (typeof item === 'object' && item.type === 'line-break') {
       // return (acc += '<br>&ZeroWidthSpace;')
