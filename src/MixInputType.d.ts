@@ -20,11 +20,11 @@ export interface Tag {
   [key: string]: string
 }
 
-type LineBreak = {
-  type: 'line-break'
-}
+// type LineBreak = {
+//   type: 'line-break'
+// }
 
-export type MixInputValue = string | Tag | LineBreak
+export type MixInputValue = string | Tag 
 export type MixInputValues = MixInputValue[]
 
 export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
