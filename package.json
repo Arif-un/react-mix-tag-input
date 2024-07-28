@@ -116,7 +116,8 @@
     "url": "https://github.com/Arif-un/react-mix-tag-input"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
   },
   "release": {
     "plugins": [
