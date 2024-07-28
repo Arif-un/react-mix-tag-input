@@ -1,6 +1,6 @@
 {
   "private": false,
-  "name": "react-mix-tag-input",
+  "name": "@arif-un/react-mix-tag-input",
   "version": "0.0.0-development",
   "description": "A simple react component for inputting tags with a mix of text",
   "module": "dist/index.d.ts",
