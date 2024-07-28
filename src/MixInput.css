@@ -10,6 +10,7 @@
   scrollbar-width: none;
   white-space: nowrap;
   min-height: 20px;
+  position: relative;
 }
 
 .mix-tag-input::-webkit-scrollbar {
