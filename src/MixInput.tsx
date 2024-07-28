@@ -7,7 +7,6 @@ import React, {
   forwardRef,
   type KeyboardEvent,
   type SyntheticEvent,
-  useEffect,
   useId,
   useImperativeHandle,
   useLayoutEffect,
@@ -39,7 +38,7 @@ const MixInput = forwardRef(
       onSelect,
       onFocus,
       value,
-      multiline,
+      // multiline,
       placeholder,
       showTagDeleteBtn = false,
       readonly = false,
@@ -52,16 +51,21 @@ const MixInput = forwardRef(
     const editorRef = useRef<HTMLDivElement | null>(null)
     const [caretPos, setCaretPos] = useState(999)
 
+    if (value === undefined || value === null) {
+      console.error('[MixInput] should have value prop but got undefined')
+    }
+
+    if (onChange === undefined) {
+      console.error('[MixInput] should have onChange prop but got undefined')
+    }
+
     useImperativeHandle(ref, () => ({
       element: editorRef.current,
       caretPosition: caretPos,
       insertContent,
     }))
 
-    console.log('caret pos', caretPos)
-
     useLayoutEffect(() => {
-      console.log('useeffect update caret content, newhtlm')
       updateContentAndCaret({
         triggerOnchange: false,
         newHtmlContent: tagValueArrToString({
@@ -70,12 +74,9 @@ const MixInput = forwardRef(
           tagClassName,
         }),
       })
-      // setCaretPos(3)
-      // setCaretPosition(editorRef.current, 3)
     }, [value, tagClassName, showTagDeleteBtn, tagValueArrToString])
 
-    useEffect(() => {
-      console.log('set caret post on useeffect, ======== actual', caretPos)
+    useLayoutEffect(() => {
       setCaretPosition(editorRef.current, caretPos)
     }, [caretPos])
 
@@ -95,24 +96,9 @@ const MixInput = forwardRef(
         : stripHtml(element.textContent || '')
       const isZeroWidthSpaceRemovedFromFirst =
         isHtmlContentPassed && isZeroWidthSpace(content.charAt(1))
-      const isZeroWidthSpaceRemoveFromLast =
-        isHtmlContentPassed && !isZeroWidthSpace(content.charAt(content.length - 1))
+
       let updatedCaret = stripHtml(newContentText).length - stripHtml(content).length
 
-      console.log(
-        'diff',
-        stripHtml(newContentText),
-        stripHtml(newContentText).length,
-        stripHtml(content),
-        stripHtml(content).length,
-      )
-      console.clear()
-      console.log(newContentText.replace(/[\u200B]/g, '#').length, caretPos, newContentText.length)
-      console.log('updatedCaret', {
-        updatedCaret,
-        isHtmlContentPassed,
-        isZeroWidthSpaceRemoveFromLast,
-      })
       {
         /**
          * input start with text node with some text and end with
@@ -133,43 +119,27 @@ const MixInput = forwardRef(
       if (isZeroWidthSpaceRemovedFromFirst) {
         updatedCaret = 1
       }
-      const isStartWithTag = newContent.startsWith('<span')
+
       const isEndWithTag = newContent.endsWith('</span>')
 
-      // let updatedContent = isStartWithTag ? '&ZeroWidthSpace;' + newContent : newContent
       let updatedContent = newContent
 
       if (isEndWithTag) {
         updatedContent += '&ZeroWidthSpace;'
       }
 
-      // if (isHtmlContentPassed && updatedCaret < 0) {
-      //   updatedCaret = 0
-      // }
-
-      if (true) {
-        setCaretPos((prev) => {
-          console.log('set caret in updatecontent and caret', {
-            prev,
-            updatedCaret,
-            isZeroWidthSpaceRemoveFromLast,
-          })
-          return prev + updatedCaret
-        })
+      if (updatedContent.length - updatedCaret < 0) {
+        updatedCaret = 0
       }
-      // if (isZeroWidthSpaceRemoveFromLast) {
-      //   setCaretPos((prv) => {
-      //     console.log('set caret pos prev--', prv)
-      //     return prv
-      //   })
-      // }
-      console.log('set content in updatecaretnadcontn', { caretPos })
-      setContent(updatedContent)
 
-      // if (isEndWithTag) {
-      //   return
-      //   setCaretPosition(editorRef.current, caretPos + 1)
-      // }
+      setCaretPos((prev) => {
+        if (updatedContent.length + updatedCaret < 0) {
+          return 0
+        }
+        return prev + updatedCaret
+      })
+
+      setContent(updatedContent)
 
       if (triggerOnchange) {
         onChange?.(nodesToArray(editorRef.current?.childNodes, tagClassName))
@@ -178,29 +148,8 @@ const MixInput = forwardRef(
 
     const handleSelectionChange = (e: SyntheticEvent<HTMLDivElement, Event>) => {
       onSelect?.(e)
-
-      // const { endNode: currentNode } = getCaretInfo(editorRef.current)
-      // const previousNode = currentNode?.previousSibling
-      // const nextNode = currentNode?.nextSibling
-      // const isNextNodeIsSpan = nextNode?.nodeName === 'SPAN'
       const newCaretPos = getCaretPosition(editorRef.current)
-      // if (e.type === 'select' && newCaretPos === undefined) {
-      //   console.log('-----------------------------')
-      //   setCaretPos(caretPos + 1)
-      //   return
-      // }
-      // if (
-      //   isNextNodeIsSpan &&
-      //   previousNode === null &&
-      //   caretPos === 1 &&
-      //   isZeroWidthSpace(currentNode?.textContent?.at(0))
-      // ) {
-      //   setCaretPos(0)
-      // } else {
-      // setCaretPos(caretPos)
-      // }
       if (typeof newCaretPos === 'number') {
-        console.log('set caret pos (on select)', caretPos, e)
         setCaretPos(newCaretPos)
       }
     }
@@ -210,7 +159,6 @@ const MixInput = forwardRef(
       const { endNode: currentNode, endOffset: currentOffset } = getCaretInfo(editorRef.current)
       const previousNode = currentNode?.previousSibling
       const nextNode = currentNode?.nextSibling
-      const isNextNodeBr = nextNode?.nodeName === 'BR'
       const zerowidthspaceLength = 1
 
       if (
@@ -220,16 +168,14 @@ const MixInput = forwardRef(
         isZeroWidthSpace(currentNode.textContent?.at(currentOffset - 1))
       ) {
         e.preventDefault()
-        console.log('here')
         const previousNodeIsBr = previousNode.nodeName === 'BR'
         const previousNodeIsSpan = previousNode.nodeName === 'SPAN'
 
         if (previousNodeIsBr) {
-          console.log('set caret pos onekeydown')
           setCaretPos((prv) => prv - 1)
         }
+
         if (previousNodeIsSpan) {
-          console.log('set caret pos onekeydown')
           setCaretPos(
             (prev) => prev - ((previousNode?.textContent?.length || 0) + zerowidthspaceLength),
           )
@@ -248,26 +194,15 @@ const MixInput = forwardRef(
         const nextNodeIsSpan = nextNode.nodeName === 'SPAN'
 
         if (nextNodeIsBr) {
-          console.log('set caret pos onkeydowna')
           setCaretPos((prv) => prv + 1)
         }
+
         if (nextNodeIsSpan) {
           setCaretPos((prev) => {
-            console.log(
-              'set caret pos onkeydowna',
-              prev,
-              previousNode?.textContent?.length,
-              prev + (previousNode?.textContent?.length || 0) + zerowidthspaceLength,
-            )
             return prev + (previousNode?.textContent?.length || 0) + zerowidthspaceLength
           })
         }
       }
-
-      // if (key === 'ArrowRight' && currentNode && isNextNodeBr) {
-      //   e.preventDefault()
-      //   setCaretPos((prv) => prv + 1)
-      // }
 
       if (
         key === 'Backspace' &&
@@ -285,15 +220,14 @@ const MixInput = forwardRef(
 
       if (key === 'Enter') {
         e.preventDefault()
-        if (multiline) {
-          insertContent({ type: 'line-break' })
-        }
+        // if (multiline) {
+        //   insertContent({ type: 'line-break' })
+        // }
       }
       onKeyDown?.(e)
     }
 
     const handleFocus = (e: FocusEvent<HTMLDivElement, Element>) => {
-      console.log('set caret pos on focus')
       setCaretPosition(editorRef.current, caretPos)
       onFocus?.(e)
     }
@@ -305,12 +239,6 @@ const MixInput = forwardRef(
     }
 
     function insertContent(content: MixInputType.MixInputValue | MixInputType.MixInputValue[]) {
-      if (window.getSelection()?.anchorNode?.parentElement !== editorRef.current) {
-        // editorRef.current?.focus()
-        // setCaretPosition(editorRef.current, caretPos)
-        // console.log('focus', window.getSelection()?.anchorNode?.parentElement)
-      }
-
       const newContentHTML = tagValueArrToString({
         tagClassName,
         showTagDeleteBtn,
@@ -364,7 +292,7 @@ const MixInput = forwardRef(
           onSelect={handleSelectionChange}
           onFocus={handleFocus}
           dangerouslySetInnerHTML={{ __html: content }}
-          {...(multiline ? { 'aria-multiline': true } : {})}
+          // {...(multiline ? { 'aria-multiline': true } : {})}
           {...restProps}
         />
       </>

@@ -28,10 +28,10 @@ export type MixInputValue = string | Tag | LineBreak
 export type MixInputValues = MixInputValue[]
 
 export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
-  value?: MixInputValues
-  multiline?: boolean
+  value: MixInputValues
+  // multiline?: boolean
   placeholder?: string
-  onChange?: (value: MixInputValues) => void
+  onChange: (value: MixInputValues) => void
   showTagDeleteBtn?: boolean
   readonly?: boolean
   tagClassName?: string
