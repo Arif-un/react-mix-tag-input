@@ -1,14 +1,15 @@
 .mix-tag-input {
   overflow: auto;
-  width: 300px;
-  padding: 6px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 18.75rem;
+  padding: .375rem;
+  border: .0625rem solid #ccc;
+  border-radius: .25rem;
   font-size: medium;
   -ms-overflow-style: none;
   overflow-x: scroll;
   scrollbar-width: none;
   white-space: nowrap;
+  min-height: 20px;
 }
 
 .mix-tag-input::-webkit-scrollbar {
@@ -16,12 +17,12 @@
 }
 
 .mix-tag-input:hover {
-  border: 1px solid #aaa;
+  border: .0625rem solid #aaa;
 }
 
 .mix-tag-input:focus {
-  border: 1px solid black;
-  outline: 2px solid black;
+  border: .0625rem solid black;
+  outline: .125rem solid black;
 }
 
 .mix-tag-input:empty::before {
@@ -32,31 +33,31 @@
 
 .mtag {
   display: inline-flex;
-  padding: 3px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  padding: .1875rem;
+  border: .0625rem solid #ccc;
+  border-radius: .1875rem;
   background: #f3f3f3;
-  margin-inline: 3px;
+  margin-inline: .1875rem;
 }
 
 .mtag:has(.mtag-delete-btn) {
-  padding-right: 3px;
+  padding-right: .1875rem;
 }
 
 .mtag-delete-btn {
   display: inline-flex;
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   align-items: center;
   justify-content: center;
-  padding: 3px;
+  padding: .1875rem;
   border: none;
   border-radius: 50%;
   margin: 0;
-  margin-left: 4px;
+  margin-left: .25rem;
   background: #dbdbdb;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 0.3;
 }
 
