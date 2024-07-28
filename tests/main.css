@@ -5,4 +5,5 @@ body{
   display: grid;
   place-content: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
