@@ -103,3 +103,7 @@ typings/
 .tern-port
 
 build/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
