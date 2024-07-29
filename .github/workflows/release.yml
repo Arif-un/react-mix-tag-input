@@ -8,13 +8,14 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js latest
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Setup Node.js 
+        uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
+          node-version: 20
+          cache: npm
       - name: pkg install
-        run: npm install --legacy-peer-deps
+        run: npm ci
       - name: build
         run: npm run build
 
@@ -23,11 +24,12 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' }}
     needs: [quality]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Use Node.js latest
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
+          node-version: 20
+          cache: npm
       - run: npx semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
