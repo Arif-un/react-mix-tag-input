@@ -14,10 +14,10 @@ jobs:
         with:
           node-version: 22
           cache: npm
-       - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 9.6.0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9.6.0
 
       - name: Get pnpm store directory
         id: pnpm-cache
