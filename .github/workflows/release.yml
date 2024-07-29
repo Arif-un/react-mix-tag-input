@@ -17,8 +17,8 @@ jobs:
         run: npm install --legacy-peer-deps
       - name: build
         run: npm run build
-      - name install semantic-release
-        run: npm install @semantic-release/git @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github @semantic-release/npm -D
+      - name: install semantic-release
+        run: npm install -D @semantic-release/git @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/github @semantic-release/npm
 
   publish:
     runs-on: ubuntu-latest
