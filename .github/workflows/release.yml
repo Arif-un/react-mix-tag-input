@@ -13,7 +13,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
@@ -43,7 +42,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
       - run: pnpx semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
