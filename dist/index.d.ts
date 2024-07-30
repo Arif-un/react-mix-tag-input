@@ -28,8 +28,9 @@ interface MixInputRef {
   element: HTMLDivElement | null
   caretPosition: number
   insertContent: (content: MixInputValue | MixInputValue[]) => void
+  //   setCaret: (offset: number) => void
 }
 
 declare const MixInput: React.ForwardRefExoticComponent<MixInputProps & React.RefAttributes<MixInputRef>>;
 
-export { type MixInputProps, type MixInputRef, type MixInputValue, type MixInputValues, MixInput as default };
+export { type MixInputProps, type MixInputRef, type MixInputValue, type MixInputValues, type Tag, MixInput as default };
