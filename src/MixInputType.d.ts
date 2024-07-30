@@ -17,6 +17,7 @@ export interface CreateTagParams {
 export interface Tag {
   type: 'tag'
   label: string
+  'data-id'?: string
   [key: string]: string
 }
 
@@ -24,7 +25,7 @@ export interface Tag {
 //   type: 'line-break'
 // }
 
-export type MixInputValue = string | Tag 
+export type MixInputValue = string | Tag
 export type MixInputValues = MixInputValue[]
 
 export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
