@@ -1,3 +1,4 @@
+import { EditorContentProps } from '@tiptap/react'
 import '@total-typescript/ts-reset'
 
 import type { HTMLAttributes } from 'react'
@@ -16,17 +17,17 @@ export interface CreateTagParams {
 
 export interface Tag {
   type: 'tag'
-  label: string
-  'data-id'?: string
-  [key: string]: string
+  attrs: {
+    id?: string
+    label?: string
+  }
 }
 
 // type LineBreak = {
 //   type: 'line-break'
 // }
 
-export type MixInputValue = string | Tag
-export type MixInputValues = MixInputValue[]
+export type MixInputValues = MixInputValue[][]
 
 export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   value: MixInputValues
@@ -39,8 +40,8 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export interface MixInputRef {
-  element: HTMLDivElement | null
-  caretPosition: number
+  editor: EditorContentProps
   insertContent: (content: MixInputValue | MixInputValue[]) => void
+  // caretPosition: number
   //   setCaret: (offset: number) => void
 }

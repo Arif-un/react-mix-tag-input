@@ -65,3 +65,46 @@
 .mtag-delete-btn:hover {
   background: #ccc;
 }
+
+
+
+/* /////////////////////////// */
+
+.mix-input{
+  padding: .375rem;
+  border: 1px solid #ccc;
+  border-radius: .25rem;
+  min-height: 30px;
+  display: block;
+  width: 300px;
+}
+
+.mix-input p.is-editor-empty::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.mi-paragraph{
+  margin: 0;
+}
+
+.mi-mention{
+  background-color: aliceblue;
+  border: 1px solid #ccc;
+  border-radius: .25rem;
+  padding: 2px 3px;
+  display: inline-block;
+  margin-inline: 2px;
+}
+
+.mi-tag{
+  background-color: rgb(240, 255, 243);
+  border: 1px solid #ccc;
+  border-radius: .25rem;
+  padding: 2px 3px;
+  display: inline-block;
+  margin-inline: 3px;
+}

@@ -117,5 +117,14 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@tiptap/core": "^2.5.8",
+    "@tiptap/extension-document": "^2.5.8",
+    "@tiptap/extension-mention": "^2.5.8",
+    "@tiptap/extension-paragraph": "^2.5.8",
+    "@tiptap/extension-placeholder": "^2.5.8",
+    "@tiptap/extension-text": "^2.5.8",
+    "@tiptap/react": "^2.5.8"
   }
 }

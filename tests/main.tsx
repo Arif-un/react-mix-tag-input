@@ -13,7 +13,7 @@ function TestApp() {
   const [caretPos, setCaretPos] = useState<number>(0)
 
   const handleOnChange = (value: MixInputValues) => {
-    setValue(value)
+    setValue(value.flat())
   }
 
   const handleControls = (type: string) => () => {
@@ -33,16 +33,29 @@ function TestApp() {
 
   return (
     <div>
-      <button onClick={handleControls('reset')} data-testId="reset">Reset</button>
-      <button onClick={handleControls('insert-tag-by-arr')} data-testId="insert-tag-by-arr">Insert Tag 1</button>
-      <button onClick={handleControls('insert-tag-by-ref')} data-testId="insert-tag-by-ref">Insert Tag 2</button>
+      <button onClick={handleControls('reset')} data-testId="reset">
+        Reset
+      </button>
+      <button onClick={handleControls('insert-tag-by-arr')} data-testId="insert-tag-by-arr">
+        Insert Tag 1
+      </button>
+      <button onClick={handleControls('insert-tag-by-ref')} data-testId="insert-tag-by-ref">
+        Insert Tag 2
+      </button>
       <button onClick={handleControls('caret-pos')} data-testId="get-caret-pos-btn">
         Print Updated Caret Pos
       </button>
       <br />
       <br />
       <div data-testId="caret-pos">{caretPos}</div>
-      Test <MixInput ref={ref} value={value} onChange={handleOnChange} data-testId="input" />
+      Test{' '}
+      <MixInput
+        ref={ref}
+        value={value}
+        onChange={handleOnChange}
+        placeholder="Write here..."
+        data-testId="input"
+      />
     </div>
   )
 }

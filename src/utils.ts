@@ -1,6 +1,7 @@
 import { type HTMLProps } from 'react'
 
-import type { CreateTagParams, MixInputValue, Tag, TagValueArrToStringParams } from './MixInputType'
+import type { CreateTagParams, MixInputValue, MixInputValues, Tag, TagValueArrToStringParams } from './MixInputType'
+import { JSONContent } from '@tiptap/core'
 
 export const ELEMENT_NODE = 1
 const TEXT_NODE = 3
@@ -299,4 +300,38 @@ export function split(str: string, index: number) {
   const result = [str.slice(0, index), str.slice(index)]
 
   return result
+}
+
+
+// =================================================
+
+function createTagObj(item: JSONContent): Tag {
+  return { type: 'tag', attrs: { ...item.attrs } }
+}
+
+export function normalizeJsonValue(value: JSONContent, normalizeValue: MixInputValues = []) {
+  console.log('normalizeValue', normalizeValue)
+  const lastItem = normalizeValue.at(-1)
+  if (
+    normalizeValue.length === 0 ||
+    (Array.isArray(lastItem) && lastItem.length > 0)
+  ) {
+    normalizeValue.push([])
+  }
+  value?.map((item: JSONContent) => {
+    if (item.type === 'text' && Array.isArray(lastItem)) {
+      lastItem.push(item.text)
+    }
+    if (item.type === 'tag' && Array.isArray(lastItem)) {
+      lastItem.push(createTagObj(item))
+    }
+    if (item.type === 'paragraph' && item.content) {
+      normalizeJsonValue(item.content, normalizeValue)
+    }
+  })
+
+  if (normalizeValue.at(-1)?.length === 0) {
+    normalizeValue.pop()
+  }
+  return normalizeValue
 }
