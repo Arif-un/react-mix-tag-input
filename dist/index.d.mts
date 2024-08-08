@@ -1,34 +1,32 @@
-import React, { HTMLAttributes } from 'react';
+import React, { CSSProperties, HTMLAttributes } from 'react';
 
 interface Tag {
   type: 'tag'
-  label: string
-  'data-id'?: string
-  [key: string]: string
+  attrs: {
+    id?: string
+    label?: string
+    class?: string | string[]
+    style?: CSSProperties
+  }
 }
 
-// type LineBreak = {
-//   type: 'line-break'
-// }
+type MixInputValue = Tag | string
 
-type MixInputValue = string | Tag
-type MixInputValues = MixInputValue[]
+type MixInputValues = MixInputValue[][]
 
 interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   value: MixInputValues
-  // multiline?: boolean
   placeholder?: string
   onChange: (value: MixInputValues) => void
-  showTagDeleteBtn?: boolean
   readonly?: boolean
   tagClassName?: string
+  // multiline?: boolean
+  // showTagDeleteBtn?: boolean
 }
 
 interface MixInputRef {
-  element: HTMLDivElement | null
-  caretPosition: number
+  editor: HTMLDivElement | null
   insertContent: (content: MixInputValue | MixInputValue[]) => void
-  //   setCaret: (offset: number) => void
 }
 
 declare const MixInput: React.ForwardRefExoticComponent<MixInputProps & React.RefAttributes<MixInputRef>>;
