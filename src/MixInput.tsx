@@ -50,8 +50,12 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   }
 
   useEffect(() => {
-    const updatedValueFromParent = mixInputValueToEditorValue(value)
+    let updatedValueFromParent = mixInputValueToEditorValue(value)
+    if (updatedValueFromParent.length === 0) {
+      updatedValueFromParent = [{ type: 'paragraph' }]
+    }
     if (JSON.stringify(updatedValueFromParent) === JSON.stringify(editor?.getJSON().content)) return
+    console.log({ updatedValueFromParent, value: editor?.getJSON().content })
     editor?.commands.setContent(updatedValueFromParent)
   }, [value])
 
