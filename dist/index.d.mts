@@ -1,4 +1,5 @@
 import React, { CSSProperties, HTMLAttributes } from 'react';
+import { Editor } from '@tiptap/core';
 import { UseEditorOptions } from '@tiptap/react';
 
 interface Tag {
