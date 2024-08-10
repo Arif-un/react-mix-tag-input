@@ -1,5 +1,6 @@
-import { type UseEditorOptions } from '@tiptap/react'
 import '@total-typescript/ts-reset'
+import { Editor, } from '@tiptap/core'
+import { UseEditorOptions } from '@tiptap/react'
 
 import type { CSSProperties, HTMLAttributes } from 'react'
 export interface Tag {
