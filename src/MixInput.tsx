@@ -20,6 +20,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     placeholder,
     readonly = false,
     tagClassName,
+    editorOptions,
     ...restProps
   } = props
 
@@ -38,10 +39,10 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
         tagClassName,
       }),
     ],
-
     onUpdate: ({ editor }) => {
       onChange?.(editorValueToMixInputValue(editor?.getJSON()?.content || []))
     },
+    ...editorOptions,
   })
 
   const insertContent = (content: MixInputValue | MixInputValue[] | MixInputValue[][]) => {

@@ -1,3 +1,4 @@
+import { type UseEditorOptions } from '@tiptap/react'
 import '@total-typescript/ts-reset'
 
 import type { CSSProperties, HTMLAttributes } from 'react'
@@ -21,6 +22,7 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   onChange: (value: MixInputValues) => void
   readonly?: boolean
   tagClassName?: string
+  editorOptions?: UseEditorOptions 
   // multiline?: boolean
   // showTagDeleteBtn?: boolean
 }
