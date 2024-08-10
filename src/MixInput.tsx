@@ -60,7 +60,8 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
   }, [value])
 
   useImperativeHandle(ref, () => ({
-    editor: editorRef.current,
+    element: editorRef.current,
+    editor: editor,
     insertContent,
   }))
 

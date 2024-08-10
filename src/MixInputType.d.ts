@@ -22,12 +22,13 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   onChange: (value: MixInputValues) => void
   readonly?: boolean
   tagClassName?: string
-  editorOptions?: UseEditorOptions 
+  editorOptions?: UseEditorOptions
   // multiline?: boolean
   // showTagDeleteBtn?: boolean
 }
 
 export interface MixInputRef {
-  editor: HTMLDivElement | null
+  element: HTMLDivElement | null
+  editor: Editor | null
   insertContent: (content: MixInputValue | MixInputValue[]) => void
 }
