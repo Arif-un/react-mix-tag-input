@@ -12,7 +12,7 @@ function TestApp() {
 
   const handleOnChange = (value: MixInputValues) => {
     console.log('on change', value)
-    setValue(value)
+    setValue([value.flat()])
   }
 
   const handleControls = (type: string) => () => {
