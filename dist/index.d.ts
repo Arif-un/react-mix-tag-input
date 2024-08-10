@@ -1,4 +1,5 @@
 import React, { CSSProperties, HTMLAttributes } from 'react';
+import { UseEditorOptions } from '@tiptap/react';
 
 interface Tag {
   type: 'tag'
@@ -20,12 +21,14 @@ interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
   onChange: (value: MixInputValues) => void
   readonly?: boolean
   tagClassName?: string
+  editorOptions?: UseEditorOptions
   // multiline?: boolean
   // showTagDeleteBtn?: boolean
 }
 
 interface MixInputRef {
-  editor: HTMLDivElement | null
+  element: HTMLDivElement | null
+  editor: Editor | null
   insertContent: (content: MixInputValue | MixInputValue[]) => void
 }
 
