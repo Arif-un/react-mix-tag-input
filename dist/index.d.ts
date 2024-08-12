@@ -1,6 +1,6 @@
 import React, { CSSProperties, HTMLAttributes } from 'react';
 import { Editor } from '@tiptap/core';
-import { UseEditorOptions } from '@tiptap/react';
+import { EditorContentProps, UseEditorOptions } from '@tiptap/react';
 
 interface Tag {
   type: 'tag'
@@ -9,6 +9,7 @@ interface Tag {
     label?: string
     class?: string | string[]
     style?: CSSProperties
+    [key: string]: string | string[] | CSSProperties | undefined
   }
 }
 
@@ -16,13 +17,14 @@ type MixInputValue = Tag | string
 
 type MixInputValues = MixInputValue[][]
 
-interface MixInputProps extends HTMLAttributes<HTMLDivElement> {
+interface MixInputProps extends HTMLAttributes<HTMLDivElement>, Omit<EditorContentProps, 'editor'> {
   value: MixInputValues
   placeholder?: string
   onChange: (value: MixInputValues) => void
   readonly?: boolean
   tagClassName?: string
   editorOptions?: UseEditorOptions
+  tagAttrs?: Record<string, string | undefined>
   // multiline?: boolean
   // showTagDeleteBtn?: boolean
 }
@@ -33,6 +35,6 @@ interface MixInputRef {
   insertContent: (content: MixInputValue | MixInputValue[]) => void
 }
 
-declare const MixInput: React.ForwardRefExoticComponent<MixInputProps & React.RefAttributes<MixInputRef>>;
+declare const MixInput: React.ForwardRefExoticComponent<Omit<MixInputProps, "ref"> & React.RefAttributes<MixInputRef>>;
 
 export { type MixInputProps, type MixInputRef, type MixInputValue, type MixInputValues, type Tag, MixInput as default };
