@@ -1,4 +1,4 @@
-import { mergeAttributes, Node } from "@tiptap/core";
+import { Attribute, mergeAttributes, Node } from "@tiptap/core";
 
 export default Node.create({
   name: "tag",
@@ -23,30 +23,36 @@ export default Node.create({
   addNodeView: () => ({ node, extension }) => {
     const span = document.createElement('span');
     span.className = 'mi-tag'
-    span.innerHTML = node.attrs.label
-    // span.setAttribute('contenteditable', 'false');
+    const { label, id, class: classes, style, ...restAttrs } = node.attrs
+    span.innerHTML = label
     span.setAttribute('data-type', 'tag')
 
-    if (node.attrs.id) {
-      span.setAttribute('data-id', node.attrs.id)
+    if (id) {
+      span.setAttribute('data-id', id)
     }
 
     if (extension.options.tagClassName) {
       span.classList.add(extension.options.tagClassName)
     }
 
-    if (node.attrs.class) {
-      if (Array.isArray(node.attrs.class)) {
-        node.attrs.class.forEach((c) => {
+    if (classes) {
+      if (Array.isArray(classes)) {
+        classes.forEach((c) => {
           span.classList.add(c as string)
         })
       } else {
-        span.classList.add(node.attrs.class)
+        span.classList.add(classes)
       }
     }
 
-    if (node.attrs.style) {
-      Object.assign(span.style, node.attrs.style)
+    if (style) {
+      Object.assign(span.style, style)
+    }
+
+    if (Object.keys(restAttrs).length) {
+      Object.keys(restAttrs).forEach((key) => {
+        span.dataset[key] = restAttrs[key]
+      })
     }
 
     const dom = document.createElement('span')
@@ -58,6 +64,10 @@ export default Node.create({
   },
 
   addAttributes() {
-    return { label: undefined, id: undefined, class: undefined, style: undefined };
+    const extraAttrs: Record<string, Attribute> = {}
+    for (const key in this.options.attrs) {
+      extraAttrs[key] = { default: this.options.attrs[key] }
+    }
+    return extraAttrs
   }
 });

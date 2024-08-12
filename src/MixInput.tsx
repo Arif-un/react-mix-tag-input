@@ -11,6 +11,13 @@ import Placeholder from '@tiptap/extension-placeholder'
 import TagExtension from './TagExtension'
 import { type MixInputProps, type MixInputRef, type MixInputValue } from './MixInputType'
 
+const DEFAULT_TAG_ATTRS = {
+  id: undefined,
+  label: undefined,
+  class: undefined,
+  style: undefined,
+}
+
 const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
   const {
     onChange,
@@ -22,6 +29,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     tagClassName,
     editorOptions,
     className,
+    tagAttrs,
     ...restProps
   } = props
 
@@ -38,6 +46,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       Placeholder.configure({ placeholder }),
       TagExtension.configure({
         tagClassName,
+        attrs: { ...DEFAULT_TAG_ATTRS, ...tagAttrs},
       }),
     ],
     onUpdate: ({ editor }) => {
@@ -62,7 +71,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
 
   useImperativeHandle(ref, () => ({
     element: editorRef.current,
-    editor: editor,
+    editor,
     insertContent,
   }))
 
