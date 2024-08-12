@@ -7,6 +7,10 @@
   font-size: 1rem;
 }
 
+.mix-input:focus{
+  border: 1px solid #000;
+}
+
 .mix-input:hover {
   border: .0625rem solid #aaa;
 }
