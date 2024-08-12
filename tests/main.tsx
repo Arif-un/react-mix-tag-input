@@ -21,7 +21,10 @@ function TestApp() {
     }
     if (type === 'insert-tag-by-arr') {
       setValue((prv) => {
-        prv[0].push({ type: 'tag', attrs: { label: 'sss', class: '----asd---' } })
+        prv[0].push({
+          type: 'tag',
+          attrs: { label: 'sss', class: '----asd---', ddd: 'dddd', sss: 'tttt' },
+        })
         return [...prv]
       })
     }
@@ -54,6 +57,8 @@ function TestApp() {
         onChange={handleOnChange}
         placeholder="Write here..."
         data-testId="input"
+        spellCheck={false}
+        // tagAttrs={{ test-attr: '22', test: undefined }}
       />
     </div>
   )
