@@ -56,8 +56,8 @@ function TestApp() {
         value={value}
         onChange={handleOnChange}
         placeholder="Write here..."
-        data-testId="input"
         spellCheck={false}
+        // data-testId="input"
         // tagAttrs={{ test-attr: '22', test: undefined }}
       />
     </div>
