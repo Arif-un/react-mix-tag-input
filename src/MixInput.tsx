@@ -30,13 +30,16 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     editorOptions,
     className,
     tagAttrs,
+    ref: _ref,
     ...restProps
   } = props
 
   const editorRef = useRef<HTMLDivElement>(null)
 
   const editor = useEditor({
-    editorProps: { attributes: { class: `mix-input ${className}`, ...(restProps as any) } },
+    editorProps: {
+      attributes: { class: `mix-input ${className}` },
+    },
     extensions: [
       Document,
       Paragraph.configure({
@@ -46,7 +49,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       Placeholder.configure({ placeholder }),
       TagExtension.configure({
         tagClassName,
-        attrs: { ...DEFAULT_TAG_ATTRS, ...tagAttrs},
+        attrs: { ...DEFAULT_TAG_ATTRS, ...tagAttrs },
       }),
     ],
     onUpdate: ({ editor }) => {
@@ -75,7 +78,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     insertContent,
   }))
 
-  return <EditorContent editor={editor} innerRef={editorRef} />
+  return <EditorContent editor={editor} innerRef={editorRef} {...restProps} />
 })
 
 export default MixInput
