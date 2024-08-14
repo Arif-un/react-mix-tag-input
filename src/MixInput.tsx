@@ -30,7 +30,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     editorOptions,
     className,
     tagAttrs,
-    ref: _ref,
+    tagEventHandlers,
     ...restProps
   } = props
 
@@ -50,6 +50,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       TagExtension.configure({
         tagClassName,
         attrs: { ...DEFAULT_TAG_ATTRS, ...tagAttrs },
+        eventHandlers: tagEventHandlers,
       }),
     ],
     onUpdate: ({ editor }) => {
@@ -78,7 +79,13 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     insertContent,
   }))
 
-  return <EditorContent editor={editor} innerRef={editorRef} {...restProps} />
+  return (
+    <EditorContent
+      editor={editor}
+      innerRef={editorRef}
+      {...(restProps as Omit<typeof restProps, 'ref'>)}
+    />
+  )
 })
 
 export default MixInput

@@ -55,12 +55,28 @@ export default Node.create({
       })
     }
 
+    // Add event listeners
+    if (extension.options.eventHandlers) {
+      Object.entries(extension.options.eventHandlers).forEach(([eventName, handler]) => {
+        span.addEventListener(eventName, handler as EventListener)
+      })
+    }
+
     const dom = document.createElement('span')
     dom.appendChild(span)
     // add zero-width space to make caret visible to outside of tag
     dom.appendChild(document.createTextNode('\u200B'))
 
-    return { dom }
+    return {
+      dom,
+      destroy: () => {
+        if (extension.options.eventHandlers) {
+          Object.entries(extension.options.eventHandlers).forEach(([eventName, handler]) => {
+            span.removeEventListener(eventName, handler as EventListener)
+          })
+        }
+      }
+    }
   },
 
   addAttributes() {

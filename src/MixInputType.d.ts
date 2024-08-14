@@ -26,6 +26,7 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement>, Omit<Edit
   tagClassName?: string
   editorOptions?: UseEditorOptions
   tagAttrs?: Record<string, string | undefined>
+  tagEventHandlers?: Record<string, (event: Event, view: Editor) => void>
   // multiline?: boolean
   // showTagDeleteBtn?: boolean
 }
