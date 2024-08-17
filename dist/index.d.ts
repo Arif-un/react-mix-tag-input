@@ -1,15 +1,15 @@
-import React, { CSSProperties, HTMLAttributes } from 'react';
-import { Editor } from '@tiptap/core';
-import { EditorContentProps, UseEditorOptions } from '@tiptap/react';
+import React$1, { CSSProperties, HTMLAttributes } from 'react';
+import { Editor, JSONContent } from '@tiptap/core';
+import { EditorContentProps, UseEditorOptions, NodeViewProps } from '@tiptap/react';
 
 interface Tag {
   type: 'tag'
   attrs: {
     id?: string
     label?: string
-    class?: string | string[]
+    className?: string
     style?: CSSProperties
-    [key: string]: string | string[] | CSSProperties | undefined
+    [key: string]: string | CSSProperties | undefined
   }
 }
 
@@ -25,7 +25,7 @@ interface MixInputProps extends HTMLAttributes<HTMLDivElement>, Omit<EditorConte
   tagClassName?: string
   editorOptions?: UseEditorOptions
   tagAttrs?: Record<string, string | undefined>
-  tagEventHandlers?: Record<string, (event: Event, view: Editor) => void>
+  tagView?: (props: NodeViewProps) => React.ReactNode
   // multiline?: boolean
   // showTagDeleteBtn?: boolean
 }
@@ -36,6 +36,9 @@ interface MixInputRef {
   insertContent: (content: MixInputValue | MixInputValue[]) => void
 }
 
-declare const MixInput: React.ForwardRefExoticComponent<Omit<MixInputProps, "ref"> & React.RefAttributes<MixInputRef>>;
+declare const MixInput: React$1.ForwardRefExoticComponent<Omit<MixInputProps, "ref"> & React$1.RefAttributes<MixInputRef>>;
 
-export { type MixInputProps, type MixInputRef, type MixInputValue, type MixInputValues, type Tag, MixInput as default };
+declare function editorValueToMixInputValue(value: JSONContent[]): MixInputValues;
+declare function mixInputValueToEditorValue(mixInputValues: MixInputValue[] | MixInputValue[][]): JSONContent[];
+
+export { type MixInputProps, type MixInputRef, type MixInputValue, type MixInputValues, type Tag, MixInput as default, editorValueToMixInputValue, mixInputValueToEditorValue };

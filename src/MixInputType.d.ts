@@ -1,5 +1,5 @@
 import '@total-typescript/ts-reset'
-import { Editor, NodeViewProps } from '@tiptap/core'
+import { Editor } from '@tiptap/core'
 import { EditorContentProps, UseEditorOptions, NodeViewProps } from '@tiptap/react'
 
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react'
