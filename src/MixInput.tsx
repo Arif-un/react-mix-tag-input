@@ -13,8 +13,8 @@ import { type MixInputProps, type MixInputRef, type MixInputValue } from './MixI
 
 const DEFAULT_TAG_ATTRS = {
   id: undefined,
-  label: undefined,
-  class: undefined,
+  label: 'undefined',
+  className: undefined,
   style: undefined,
 }
 
@@ -30,7 +30,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     editorOptions,
     className,
     tagAttrs,
-    tagEventHandlers,
+    tagView,
     ...restProps
   } = props
 
@@ -38,7 +38,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
 
   const editor = useEditor({
     editorProps: {
-      attributes: { class: `mix-input ${className}` },
+      attributes: { class: `mix-input ${className || ''}` },
     },
     extensions: [
       Document,
@@ -50,7 +50,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
       TagExtension.configure({
         tagClassName,
         attrs: { ...DEFAULT_TAG_ATTRS, ...tagAttrs },
-        eventHandlers: tagEventHandlers,
+        tagView,
       }),
     ],
     onUpdate: ({ editor }) => {

@@ -1,16 +1,16 @@
 import '@total-typescript/ts-reset'
-import { Editor, } from '@tiptap/core'
-import { EditorContentProps, UseEditorOptions } from '@tiptap/react'
+import { Editor, NodeViewProps } from '@tiptap/core'
+import { EditorContentProps, UseEditorOptions, NodeViewProps } from '@tiptap/react'
 
-import type { CSSProperties, HTMLAttributes } from 'react'
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react'
 export interface Tag {
   type: 'tag'
   attrs: {
     id?: string
     label?: string
-    class?: string | string[]
+    className?: string
     style?: CSSProperties
-    [key: string]: string | string[] | CSSProperties | undefined
+    [key: string]: string | CSSProperties | undefined
   }
 }
 
@@ -26,7 +26,7 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement>, Omit<Edit
   tagClassName?: string
   editorOptions?: UseEditorOptions
   tagAttrs?: Record<string, string | undefined>
-  tagEventHandlers?: Record<string, (event: Event, view: Editor) => void>
+  tagView?: (props: NodeViewProps) => React.ReactNode
   // multiline?: boolean
   // showTagDeleteBtn?: boolean
 }
