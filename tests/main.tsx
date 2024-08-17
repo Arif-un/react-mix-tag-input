@@ -23,7 +23,14 @@ function TestApp() {
       setValue((prv) => {
         prv[0].push({
           type: 'tag',
-          attrs: { label: 'sss', class: '----asd---', ddd: 'dddd', sss: 'tttt' },
+          attrs: {
+            label: 'sss',
+            className: '----asd---',
+            id: 'sad',
+            ddd: 'dddd',
+            sss: 'tttt',
+            style: { color: 'red' },
+          },
         })
         return [...prv]
       })
@@ -57,6 +64,12 @@ function TestApp() {
         onChange={handleOnChange}
         placeholder="Write here..."
         spellCheck={false}
+        tagAttrs={{ className: '' }}
+        // tagView={() => (
+        //   <span data-id="a222" onMouseEnter={() => console.log(ref.current?.editor?.getJSON())}>
+        //     Tag View
+        //   </span>
+        // )}
         // data-testId="input"
         // tagAttrs={{ test-attr: '22', test: undefined }}
       />
