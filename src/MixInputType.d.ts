@@ -27,6 +27,7 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement>, Omit<Edit
   editorOptions?: UseEditorOptions
   tagAttrs?: Record<string, string | undefined>
   tagView?: (props: NodeViewProps) => React.ReactNode
+  ssr?: boolean
   // multiline?: boolean
   // showTagDeleteBtn?: boolean
 }

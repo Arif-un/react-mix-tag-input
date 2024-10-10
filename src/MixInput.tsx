@@ -21,7 +21,7 @@ const DEFAULT_TAG_ATTRS = {
 const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef>) => {
   const {
     onChange,
-    value,
+    value ,
     // multiline,
     // showTagDeleteBtn = false,
     placeholder,
@@ -31,12 +31,14 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
     className,
     tagAttrs,
     tagView,
+    ssr= false,
     ...restProps
   } = props
 
   const editorRef = useRef<HTMLDivElement>(null)
 
   const editor = useEditor({
+    immediatelyRender: !ssr,
     editorProps: {
       attributes: { class: `mix-input ${className || ''}` },
     },
@@ -52,7 +54,7 @@ const MixInput = forwardRef((props: MixInputProps, ref: ForwardedRef<MixInputRef
         attrs: { ...DEFAULT_TAG_ATTRS, ...tagAttrs },
         tagView,
       }),
-    ],
+    ], 
     onUpdate: ({ editor }) => {
       onChange?.(editorValueToMixInputValue(editor?.getJSON()?.content || []))
     },
