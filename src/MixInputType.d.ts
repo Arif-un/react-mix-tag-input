@@ -19,15 +19,16 @@ export type MixInputValue = Tag | string
 export type MixInputValues = MixInputValue[][]
 
 export interface MixInputProps extends HTMLAttributes<HTMLDivElement>, Omit<EditorContentProps, 'editor'> {
-  value: MixInputValues
+  value?: MixInputValues
   placeholder?: string
-  onChange: (value: MixInputValues) => void
+  onChange?: (value: MixInputValues) => void
   readonly?: boolean
   tagClassName?: string
   editorOptions?: UseEditorOptions
   tagAttrs?: Record<string, string | undefined>
   tagView?: (props: NodeViewProps) => React.ReactNode
-  ssr?: boolean
+  immediatelyRender?: boolean
+  ref?: React.Ref<MixInputRef>
   // multiline?: boolean
   // showTagDeleteBtn?: boolean
 }
