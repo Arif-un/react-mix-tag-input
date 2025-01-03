@@ -36,6 +36,7 @@ const MixInput = forwardRef((props: MixInputProps, ref?: ForwardedRef<MixInputRe
   } = props
 
   const editorRef = useRef<HTMLDivElement>(null)
+  const previousValueRef = useRef<string>('')
 
   const editor = useEditor({
     immediatelyRender,
@@ -66,14 +67,28 @@ const MixInput = forwardRef((props: MixInputProps, ref?: ForwardedRef<MixInputRe
   }
 
   useEffect(() => {
+    if (!editor) return
+
     let updatedValueFromParent = mixInputValueToEditorValue(value)
     if (updatedValueFromParent.length === 0) {
       updatedValueFromParent = [{ type: 'paragraph' }]
     }
-    if (JSON.stringify(updatedValueFromParent) === JSON.stringify(editor?.getJSON().content)) return
 
-    editor?.commands.setContent(updatedValueFromParent)
-  }, [value])
+    const currentValueStr = JSON.stringify(updatedValueFromParent)
+    const editorContentStr = JSON.stringify(editor.getJSON().content)
+
+    // Only update if content has actually changed
+    if (currentValueStr !== editorContentStr && currentValueStr !== previousValueRef.current) {
+      previousValueRef.current = currentValueStr
+
+      // Use setTimeout to move the update out of React's rendering phase
+      setTimeout(() => {
+        if (editor && !editor.isDestroyed) {
+          editor.commands.setContent(updatedValueFromParent)
+        }
+      }, 0)
+    }
+  }, [value, editor])
 
   useImperativeHandle(ref, () => ({
     element: editorRef.current,
