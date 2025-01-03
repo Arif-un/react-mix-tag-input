@@ -38,3 +38,5 @@ export interface MixInputRef {
   editor: Editor | null
   insertContent: (content: MixInputValue | MixInputValue[]) => void
 }
+
+export { NodeViewProps }
