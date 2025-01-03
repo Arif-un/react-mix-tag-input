@@ -30,7 +30,6 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement>, Omit<Edit
   immediatelyRender?: boolean
   ref?: React.Ref<MixInputRef>
   // multiline?: boolean
-  // showTagDeleteBtn?: boolean
 }
 
 export interface MixInputRef {
