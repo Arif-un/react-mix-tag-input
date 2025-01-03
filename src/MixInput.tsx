@@ -26,7 +26,7 @@ const MixInput = forwardRef((props: MixInputProps, ref?: ForwardedRef<MixInputRe
     // showTagDeleteBtn = false,
     placeholder,
     readonly = false,
-    tagClassName,
+    tagClassName = 'mi-tag',
     editorOptions,
     className,
     tagAttrs,
