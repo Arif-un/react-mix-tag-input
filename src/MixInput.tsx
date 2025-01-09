@@ -23,7 +23,6 @@ const MixInput = forwardRef((props: MixInputProps, ref?: ForwardedRef<MixInputRe
     onChange,
     value = [],
     // multiline,
-    // showTagDeleteBtn = false,
     placeholder,
     readonly = false,
     tagClassName = 'mi-tag',
