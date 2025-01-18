@@ -1,0 +1,133 @@
+---
+import GridLayout from "./grid-layout";
+import HeaderExample from "./header-example";
+import Snippet from "./snippet";
+import InstallSnippet from "./install-snippet";
+import Nav from "./nav.astro";
+import PropsTable from "./props-table";
+import callout from "~/assets/callout.svg";
+import logo from "~/assets/logo.svg";
+import TableOfContent from "./table-of-content";
+---
+
+<TableOfContent client:load />
+
+<div id="container">
+  <GridLayout
+    columns={8}
+    lineVariant="vertical"
+    className="w-8/12 border-0 mx-auto"
+  >
+    <Nav />
+
+    <div class="flex justify-center w-9/12 mx-auto">
+      <section>
+        <div class="mt-56 text-center flex flex-col items-center">
+          <img src={logo.src} width="350" alt="mix tag input logo" />
+
+          <p class="text-slate-500 text-sm w-9/12 mx-auto text-balance">
+            A react input component that pairs text with tags, supports
+            multiline entry, and provides customizable tag rendering.
+          </p>
+
+          <div class="mt-16 w-full">
+            <img
+              src={callout.src}
+              height="70px"
+              width="100px"
+              alt="try it callout"
+            />
+          </div>
+
+          <HeaderExample client:load />
+
+          <InstallSnippet client:load />
+
+          <Snippet />
+
+          <div class="mt-16 w-11/12 mx-auto">
+            <h4 id="custom-styles" class="text-left mb-2 scroll-mt-36">
+              Example 1: Customizable Tags
+            </h4>
+            <iframe
+              src="https://codesandbox.io/embed/ldkgsg?view=preview&module=%2Fsrc%2FApp.tsx&hidenavigation=1"
+              class="h-64 rounded-lg border-l-0 border-t-[20px] border-r-[16px] border-slate-950 overflow-hidde w-full mx-auto bor"
+              title="Mix Tag Input Example 1"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </div>
+
+          <div class="mt-16 w-11/12 mx-auto">
+            <h4 id="custom-tag-view" class="text-left mb-2 scroll-mt-36">
+              Example 2: Render Custom Component
+            </h4>
+            <iframe
+              src="https://codesandbox.io/embed/wj998t?view=preview&module=%2Fsrc%2FApp.tsx&hidenavigation=1"
+              class="h-80 rounded-md border-l-0 border-t-[20px] border-r-[16px] border-slate-950 overflow-hidde w-full mx-auto bor"
+              title="Mix Tag Input example 2"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <PropsTable />
+
+    <footer class="text-xs text-center mt-48 mb-6 text-slate-500">
+      Built by <a
+        href="https://www.linkedin.com/in/arif-un/"
+        class="underline"
+        target="_blank"
+        rel="noopener noreferrer">Arif Uddin</a
+      >. Support by <a
+        href="https://bitapps.pro/"
+        class="underline"
+        target="_blank"
+        rel="noopener noreferrer">Bit Apps</a
+      >
+    </footer>
+
+    <style is:global>
+      [contenteditable] ~ grammarly-extension,
+      input ~ grammarly-extension,
+      textarea ~ grammarly-extension {
+        display: none;
+      }
+
+      .mix-input
+        p.is-editor-empty:not(:has([data-type="tag"]:first-child))::before {
+        color: #adb5bd;
+        content: attr(data-placeholder);
+        float: left;
+        height: 0;
+        pointer-events: none;
+      }
+
+      .mi-paragraph {
+        margin: 0;
+        min-height: 27px;
+        line-height: 1.7;
+      }
+
+      .mi-mention {
+        background-color: aliceblue;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem;
+        padding: 2px 3px;
+        display: inline-block;
+        margin-inline: 2px;
+      }
+
+      .mi-tag {
+        background-color: #f3f3f3;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 2px 3px;
+        margin-inline: 3px;
+      }
+    </style>
+  </GridLayout>
+</div>

@@ -1,0 +1,35 @@
+---
+import { BsGithub } from "react-icons/bs";
+import { DiNpm } from "react-icons/di";
+import { ThemeSwitcher } from "~/components/theme-switcher";
+---
+
+<div class="fixed w-full z-10 flex justify-center left-0">
+  <nav
+    class="flex justify-between items-center h-16 backdrop-blur-md bg-slate-200 dark:bg-slate-900 dark:bg-opacity-20 rounded-full px-4 z-10 mt-2 bg-opacity-20"
+  >
+    <div>
+    </div>
+    <div class="flex gap-2 items-center">
+      <a
+        aria-label="GitHub link"
+        href="https://github.com/Arif-un/react-mix-tag-input"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="dark:text-white text-slate-950 p-2 hover:bg-slate-100 dark:hover:bg-slate-700  rounded-full"
+      >
+        <BsGithub size={24} />
+      </a>
+      <a
+        aria-label="npm link"
+        href="https://www.npmjs.com/package/@arif-un/react-mix-tag-input"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="dark:text-white text-slate-950 p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full hover:text-red-500"
+      >
+        <DiNpm size={36} />
+      </a>
+      <ThemeSwitcher client:only="react" />
+    </div>
+  </nav>
+</div>
