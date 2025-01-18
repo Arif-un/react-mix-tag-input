@@ -108,3 +108,5 @@ build/
 /blob-report/
 /playwright/.cache/
 .DS_Store
+.astro
+dist
