@@ -109,4 +109,3 @@ build/
 /playwright/.cache/
 .DS_Store
 .astro
-dist
