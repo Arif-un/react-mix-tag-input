@@ -1,10 +1,15 @@
 .mix-input{
   padding: .375rem;
   border: 1px solid #ccc;
-  border-radius: .25rem;
   min-height: 27px;
+  border-radius: .25rem;
   display: block;
   font-size: 1rem;
+}
+
+.mi-disabled{
+  background-color: #f3f3f3;
+  color: #666;
 }
 
 .mix-input:focus{

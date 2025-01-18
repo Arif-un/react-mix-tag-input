@@ -22,9 +22,8 @@ const MixInput = forwardRef((props: MixInputProps, ref?: ForwardedRef<MixInputRe
   const {
     onChange,
     value = [],
-    // multiline,
     placeholder,
-    readonly = false,
+    disabled = false,
     tagClassName = 'mi-tag',
     editorOptions,
     className,
@@ -38,9 +37,10 @@ const MixInput = forwardRef((props: MixInputProps, ref?: ForwardedRef<MixInputRe
   const previousValueRef = useRef<string>('')
 
   const editor = useEditor({
+    editable: !disabled,
     immediatelyRender,
     editorProps: {
-      attributes: { class: `mix-input ${className || ''}` },
+      attributes: { class: `mix-input ${disabled ? 'mi-disabled' : ''} ${className || ''}` },
     },
     extensions: [
       Document,
@@ -56,12 +56,14 @@ const MixInput = forwardRef((props: MixInputProps, ref?: ForwardedRef<MixInputRe
       }),
     ],
     onUpdate: ({ editor }) => {
+      if (disabled) return
       onChange?.(editorValueToMixInputValue(editor?.getJSON()?.content || []))
     },
     ...editorOptions,
   })
 
   const insertContent = (content: MixInputValue | MixInputValue[] | MixInputValue[][]) => {
+    if (disabled) return
     editor?.chain().focus().insertContent(content).run()
   }
 
@@ -97,6 +99,7 @@ const MixInput = forwardRef((props: MixInputProps, ref?: ForwardedRef<MixInputRe
 
   return (
     <EditorContent
+      aria-disabled={disabled}
       editor={editor}
       innerRef={editorRef}
       {...(restProps as Omit<typeof restProps, 'ref'>)}
