@@ -26,7 +26,7 @@ export interface MixInputProps extends HTMLAttributes<HTMLDivElement>, Omit<Edit
   tagClassName?: string
   editorOptions?: UseEditorOptions
   tagAttrs?: Record<string, string | undefined>
-  tagView?: (props: NodeViewProps) => React.ReactNode
+  tagView?: (props: NodeViewProps) => ReactNode
   immediatelyRender?: boolean
   ref?: React.Ref<MixInputRef>
 }
