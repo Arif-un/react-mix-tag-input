@@ -2,7 +2,7 @@
   "private": false,
   "name": "@arif-un/react-mix-tag-input",
   "homepage": "https://arif-un.github.io/react-mix-tag-input/#custom-tag-view",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A simple react component for inputting tags with a mix of text",
   "module": "dist/index.d.ts",
   "main": "dist/index.js",
