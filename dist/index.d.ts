@@ -22,14 +22,13 @@ interface MixInputProps extends HTMLAttributes<HTMLDivElement>, Omit<EditorConte
   value?: MixInputValues
   placeholder?: string
   onChange?: (value: MixInputValues) => void
-  readonly?: boolean
+  disabled?: boolean
   tagClassName?: string
   editorOptions?: UseEditorOptions
   tagAttrs?: Record<string, string | undefined>
   tagView?: (props: NodeViewProps) => React.ReactNode
   immediatelyRender?: boolean
   ref?: React.Ref<MixInputRef>
-  // multiline?: boolean
 }
 
 interface MixInputRef {
