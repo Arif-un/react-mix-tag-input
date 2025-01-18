@@ -29,15 +29,6 @@
   line-height: 1.6;
 }
 
-.mi-mention{
-  background-color: aliceblue;
-  border: 1px solid #ccc;
-  border-radius: .25rem;
-  padding: 2px 3px;
-  display: inline-block;
-  margin-inline: 2px;
-}
-
 .mi-tag{
   background-color: #f3f3f3;
   border: 1px solid #ccc;
