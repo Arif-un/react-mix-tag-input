@@ -4,6 +4,14 @@ A react input component that pairs text with tags, supports multiline entry, and
 
 ### [Full Documentation](https://arif-un.github.io/react-mix-tag-input/#custom-tag-view)
 
+<br/>
+<br/>
+
+![mix tag input example](https://github.com/Arif-un/react-mix-tag-input/blob/master/example%20gif%20mix-tag-input.gif?raw=true)
+
+<br/>
+<br/>
+
 ####  Installation
 
 ```
@@ -20,6 +28,7 @@ const  [value, setValue]  =  useState<MixInputValues>([
 <MixTagInput  value={value}  onChange={handleChange}  />
 ```
 
+<br/><br/>
 
 ### Props
 
@@ -27,17 +36,18 @@ const  [value, setValue]  =  useState<MixInputValues>([
 
 | Prop | Description | Default | Type |
 |------|-------------|---------|------|
-| `ref` | React forwardRef with options of component | | [MixInputRef](#mixinputref-react.forwardref) |
-| `value` | Values of Mix Input | [] | [MixInputValues](MixInputValues) |
-| `onChange` | Function to handle the change event | | (value: [MixInputValues](MixInputValues)) => void |
+| `ref` | React forwardRef with options of component | | [MixInputRef](#mixinputref-reactforwardref) |
+| `value` | Values of Mix Input | [] | [MixInputValues](#mixinputvalues--string--tag) |
+| `onChange` | Function to handle the change event | | (value: [MixInputValues](#mixinputvalues--string--tag)) => void |
 | `disabled` | Boolean value to set the input as disabled | false | Boolean |
 | `placeholder` | Placeholder text | | string |
 | `immediatelyRender` | Boolean value to render the component immediately on mount. Useful for server side rendering | false | Boolean |
 | `tagClassName` | Class name for tags | mi-tag | string |
-| `editorOptions` | Options for the editor | {} | [Editor](Editor) |
+| `editorOptions` | Options for the editor | {} | [Editor](https://tiptap.dev/docs/editor/api/editor) |
 | `tagAttrs` | Allowed attributes for tags, that returns with tag value on change and also render as data-* attribute | | { [key: string]: string } |
-| `tagView` | Custom tag view component | | React.FC<[TagViewProps](TagViewProps)> |
+| `tagView` | Custom tag view component | | React.FC<[TagViewProps](https://tiptap.dev/docs/editor/extensions/custom-extensions/node-views/react#all-available-props)> |
 
+<br/><br/>
 
 ### MixInputRef: React.forwardRef
 
@@ -55,12 +65,14 @@ return <MixTagInput ref={ref} />;
 
 | Prop | Description | Type |
 |------|-------------|------|
-| insertContent | Function to insert content in the editor current caret position, accepts Tag or Text alone or in array | (content: [Tag](Tag) \| string \| ([Tag](Tag) \| string)[]) => void |
+| insertContent | Function to insert content in the editor current caret position, accepts Tag or Text alone or in array | (content: [Tag](#tag) \| string \| ([Tag](#tag) \| string)[]) => void |
 | element | Returns the editor element | HTMLDivElement |
-| editor | Returns the editor instance | [Editor](Editor) |
+| editor | Returns the editor instance | [Editor](https://tiptap.dev/docs/editor/api/editor) |
 
 
-### MixInputValues:  (string | Tag)[][]
+<br/><br/>
+
+### MixInputValues: (string | Tag)[][]
 
 ```typescript
 const text =  'Any text string'
