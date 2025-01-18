@@ -37,7 +37,7 @@
     "e2e": "pnpm exec playwright test"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "keywords": [
     "mix-tag-input",
