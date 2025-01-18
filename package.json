@@ -45,7 +45,10 @@
     "react-component",
     "html-input",
     "mention",
-    "suggestion"
+    "suggestion",
+    "tag",
+    "tag-input",
+    "react-tag-input"
   ],
   "author": "Arif Uddin",
   "license": "MIT",
