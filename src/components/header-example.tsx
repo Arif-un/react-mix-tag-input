@@ -35,7 +35,7 @@ export default function HeaderExample() {
 
   return (
     <div className="gap-3">
-      <div className="flex justify-center gap-3">
+      <div className="flex flex-col md:flex-row justify-center gap-3">
         <div>
           <MixInput
             ref={mixInputRef}
@@ -54,7 +54,7 @@ export default function HeaderExample() {
         </Button>
       </div>
 
-      <ul className="text-xs text-slate-500 list-disc w-8/12 mx-auto mt-4">
+      <ul className="text-xs text-slate-500 dark:text-slate-400 list-disc w-10/12  md:w-8/12 mx-auto mt-4">
         <li>Try place caret anywhere in text and add tag</li>
       </ul>
     </div>

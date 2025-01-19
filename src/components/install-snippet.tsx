@@ -9,7 +9,7 @@ export default function InstallSnippet() {
       <h4 id="installation" className="text-left mb-2 scroll-mt-36">
         Installation
       </h4>
-      <div className="rounded-lg overflow-hidden text-left text-sm bg-slate-950 mx-auto relative">
+      <div className="rounded-lg text-xs overflow-auto text-left md:text-sm bg-slate-950 mx-auto relative">
         <PackageCopyButton
           packageName="@arif-un/react-mix-tag-input"
           className="absolute right-1 top-2"
@@ -20,7 +20,10 @@ export default function InstallSnippet() {
               {tokens.map((line, i) => (
                 <div {...getLineProps({ line, key: i })} key={`line-${i}`}>
                   {line.map((token, key) => (
-                    <span {...getTokenProps({ token, key })} key={`token-${key}`} />
+                    <span
+                      {...getTokenProps({ token, key })}
+                      key={`token-${key}`}
+                    />
                   ))}
                 </div>
               ))}

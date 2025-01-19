@@ -12,28 +12,30 @@ export default function CodeSnippet({
   className?: string;
 }) {
   return (
-    <div
-      className={ny([
-        "rounded-lg overflow-hidden text-left text-sm bg-slate-950 mx-auto relative",
-        className,
-      ])}
-    >
-      <Highlight theme={themes.nightOwl} language={language} code={code}>
-        {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={`${className} pl-8 py-4`} style={style}>
-            {tokens.map((line, i) => (
-              <div {...getLineProps({ line, key: i })} key={`line-${i}`}>
-                {line.map((token, key) => (
-                  <span
-                    {...getTokenProps({ token, key })}
-                    key={`token-${key}`}
-                  />
-                ))}
-              </div>
-            ))}
-          </pre>
-        )}
-      </Highlight>
-    </div>
+  <div className="grid overflow-hidden">
+      <div
+        className={ny([
+          "rounded-lg overflow-x-auto w-full text-left text-sm bg-slate-950 mx-auto relative",
+          className,
+        ])}
+      >
+        <Highlight theme={themes.nightOwl} language={language} code={code}>
+          {({ className, style, tokens, getLineProps, getTokenProps }) => (
+            <pre className={`${className} pl-8 py-4`} style={style}>
+              {tokens.map((line, i) => (
+                <div {...getLineProps({ line, key: i })} key={`line-${i}`}>
+                  {line.map((token, key) => (
+                    <span
+                      {...getTokenProps({ token, key })}
+                      key={`token-${key}`}
+                    />
+                  ))}
+                </div>
+              ))}
+            </pre>
+          )}
+        </Highlight>
+      </div>
+  </div>
   );
 }

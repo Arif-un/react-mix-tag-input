@@ -75,7 +75,7 @@ export default function TableOfContent({ className }: { className?: string }) {
 
   return (
     <div
-      className={ny(["fixed right-6 top-28 text-xs text-slate-400 font-light", className])}
+      className={ny(["fixed hidden md:inline-block right-6 top-28 text-xs text-slate-400 font-light", className])}
     >
       <ul className="">
         {links.map((link) => (
