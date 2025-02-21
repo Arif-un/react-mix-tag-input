@@ -4,11 +4,11 @@ import React, { type ForwardedRef, forwardRef, useEffect, useImperativeHandle, u
 
 import { editorValueToMixInputValue, mixInputValueToEditorValue } from './utils'
 import { EditorContent, useEditor } from '@tiptap/react'
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
+import Document from './extension-document'
+import Paragraph from './extension-paragraph'
+import Text from './extension-text'
 import Placeholder from '@tiptap/extension-placeholder'
-import TagExtension from './TagExtension'
+import Tag from './extension-tag'
 import { type MixInputProps, type MixInputRef, type MixInputValue } from './MixInputType'
 
 const DEFAULT_TAG_ATTRS = {
@@ -49,11 +49,12 @@ const MixInput = forwardRef((props: MixInputProps, ref?: ForwardedRef<MixInputRe
       }),
       Text,
       Placeholder.configure({ placeholder }),
-      TagExtension.configure({
+      Tag.configure({
         tagClassName,
         attrs: { ...DEFAULT_TAG_ATTRS, ...tagAttrs },
         tagView,
       }),
+
     ],
     onUpdate: ({ editor }) => {
       if (disabled) return
